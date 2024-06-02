@@ -7,7 +7,6 @@ import emailSVG from '../assets/svg/95247-email.json';
 import viteSVG from '../assets/svg/viteLogo.svg';
 import netlifySVG from '../assets/svg/netlifyLogo.svg';
 import sassSVG from '../assets/svg/sassLogo.svg';
-import myResume from '../assets/pdf/ocean-waring-resume.pdf';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faGithub, faHtml5, faCss3, faJsSquare, faReact } from '@fortawesome/free-brands-svg-icons';
@@ -30,7 +29,7 @@ export default function HomePage() {
               ref={ref}
               onClick={() => ref.current.scrollTo(0)}
             >
-              OCEAN
+              Bhargav
               <span
                 style={{
                   color: "rgb(217, 4, 41)",
@@ -54,7 +53,7 @@ export default function HomePage() {
                 PROJECTS
               </li>
               <li ref={ref} onClick={() => ref.current.scrollTo(1)}>
-                RESUME
+                About
               </li>
               <li
                 style={{ fontWeight: "200" }}
@@ -71,10 +70,10 @@ export default function HomePage() {
           <section className="introSection">
             <div style={{ display: "flex" }}>
               <div className="introText">
-                <h1>MY NAME IS OCEAN WARING</h1>
-                <p>FRONTEND REACT DEVELOPER</p>
+                <h1>Bhargav Munigonda</h1>
+                <p>CS UnderGrad</p>
                 <p>
-                  Based in NYC{" "}
+                  Bangalore{" "}
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     style={{ color: "red" }}
@@ -83,11 +82,11 @@ export default function HomePage() {
                 <div className="contactBtns">
                   <a
                     target="#"
-                    href="https://www.linkedin.com/in/ocean-waring/"
+                    href="https://www.linkedin.com/in/bhargav-m-4b80352b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app "
                   >
                     <FontAwesomeIcon className="linkedin" icon={faLinkedin} />
                   </a>
-                  <a target="#" href="https://github.com/Ocn-W">
+                  <a target="#" href="https://github.com/vexora-0">
                     <FontAwesomeIcon className="github" icon={faGithub} />
                   </a>
                 </div>
@@ -106,25 +105,13 @@ export default function HomePage() {
             <div className="aboutIntro">
               <h2>ABOUT ME</h2>
               <p>
-                Hello! I am a Front End React developer based in NYC.
-                Currently building a strong and growing skill set in HTML5, CSS3/SCSS,
-                JavaScript, Redux/Jotai, React, React Native, and TDD using Jest. I consistently improve a keen eye for design
-                and a commitment to producing logical, accessible, and
-                responsive code. I am dedicated to continuous learning and
-                staying up-to-date with the latest trends and best coding
-                practices, ensuring that I can be a useful team player and
-                provide efficient solutions. Let's connect and discuss how I can
-                contribute to your web development team!
+                Hello! I am a student at SST with a passion for transforming raw ideas into 
+                impactful websites and products. I thrive on the process of bringing concepts 
+                to life, aiming to create work that challenges me as a developer and makes 
+                me proud. I am fluent in Java and JavaScript, and I also have some experience 
+                with Python. My goal is to continually grow my skills and contribute to projects 
+                that make a meaningful difference.
               </p>
-            </div>
-            <div className="aboutResume">
-              <object
-                data={myResume}
-                width="100%"
-                height="100%"
-                type="application/pdf"
-              />
-              <a href={myResume}>Download</a>
             </div>
           </section>
           <section className="techStack">
@@ -172,16 +159,14 @@ export default function HomePage() {
                   style={{ color: "gold" }}
                 />
                 <img src={sassSVG} />
-                <FontAwesomeIcon
-                  className="reactLogo"
-                  icon={faReact}
-                  style={{ color: "cyan" }}
-                />
                 <img src={viteSVG} />
                 <img src={netlifySVG} /> 
               </div>
             </div>
           </section>
+        </ParallaxLayer>
+        <ParallaxLayer offset={0.75} speed={1}>
+          <Lottie className="lottieWave" animationData={waveSVG} />
         </ParallaxLayer>
 {/* Projects Section */}
         <ParallaxLayer offset={window.innerWidth < 768 ? 2.5 : 2.25}>
@@ -196,7 +181,7 @@ export default function HomePage() {
           speed={window.innerWidth < 768 ? 2 : 1}
           style={{ backgroundColor: "var(--body_background)" }}
         >
-          <Lottie className="lottieEmail" animationData={emailSVG} />
+          { <Lottie className="lottieEmail" animationData={emailSVG} /> }
           <section className="contactSection">
             <h2>LETS WORK</h2>
             <div className="formContainer">

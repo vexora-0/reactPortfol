@@ -4,13 +4,10 @@ import { faReact, faHtml5, faCss3, faJsSquare } from '@fortawesome/free-brands-s
 import viteSVG from '../assets/svg/viteLogo.svg';
 import netlifySVG from '../assets/svg/netlifyLogo.svg';
 import '../css/Projects.css';
-import sassSVG from '../assets/svg/sassLogo.svg';
 import webGenerator from '../assets/WebsiteGenerator.jpg';
-import playlistMaker from '../assets/PlaylistMaker.jpg';
-import retailSite from '../assets/RetailSite.jpg';
-import qrGenSite from '../assets/QRGeneratorSite.jpg';
-import authySite from '../assets/TicketAuthSite.jpg';
 import { faArrowLeft, faArrowRight, faCircle } from '@fortawesome/free-solid-svg-icons';
+import Calculator from '../assets/Calcutor.jpg';
+import moviereview from '../assets/moviereview.jpg';
 
 
 
@@ -22,7 +19,7 @@ export default function Projects() {
   const jsLogo = <FontAwesomeIcon icon={faJsSquare}  style={{color:'gold'}}/>  
   const netlifyLogo = <img src={netlifySVG} className='netlifyLogo' alt="Netlify Logo"/>;
   const viteLogo = <img src={viteSVG} className='viteLogo' alt="Vite Logo"/>;
-  const sassLogo = <img src={sassSVG} className='sassLogo' alt='Sass Logo'/>;
+
 
   function updateIndex(newIndex) {
     newIndex < 0
@@ -35,40 +32,36 @@ export default function Projects() {
 
   const projects = [
     {
-      name: "Retail Website",
+      name: "Basic Image Editor",
       techstack: (
         <>
-          {viteLogo}
-          {reactLogo}
-          {jsLogo}
-          {sassLogo}
+        <p>Java</p>
         </>
       ),
       dependencies: (
         <>
-          {netlifyLogo}
-          <p>Jotai</p>
-          <p>React Router</p>
+          <p>JavaFX</p>
         </>
       ),
       description: (
         <>
           <p>
-            This is a mock e-commerce website using front-end features combined
-            with <em>global state management handled by Jotai</em> and{" "}
-            <em>pagination with React Router</em>. Features include a randomly
-            generated list of clothing items to select your desired purchase,
-            filtering clothing items on the clothing page by price or rating,
-            adding items from your shopping or favorites cart, and a checkout
-            page to view your total and mock form to complete purchases.
-          </p>
+            This is a basic image editor created using Java, providing essential 
+            image manipulation features within a simple and intuitive interface. 
+            The editor includes <em>basic functionality such as cropping, rotating, 
+            and resizing images</em>, as well as <em>color adjustments like brightness, 
+            contrast, and saturation</em>. Users can also apply a range of filters to 
+            enhance their images. The application supports <em>undo and redo actions</em>, 
+            ensuring a flexible and user-friendly experience. The image editor is designed 
+            to be lightweight yet powerful, catering to everyday image editing needs.
+         </p>
         </>
       ),
-      demoUrl: "https://voguevalue.netlify.app",
-      image: retailSite,
-    },
+      demoUrl: "https://github.com/vexora-0?tab=repositories",
+      image: webGenerator,
+    },  
     {
-      name: "QR Code Generator",
+      name: "Movie review site",
       techstack: (
         <>
           {viteLogo}
@@ -77,102 +70,29 @@ export default function Projects() {
         </>
       ),
       dependencies: (
-        <>
-          {netlifyLogo}
-          <p>react-qr-code</p>
-        </>
-      ),
-      description: (
-        <>
-          <p>
-            This website makes use of the library react-qr-code to generate,
-            customize, and download your own QR Codes for websites, business
-            cards, social media, you name it! This project highlights some
-            interesting features possible with the library such as{" "}
-            <em>SVG to PNG conversion for file downloads</em> and{" "}
-            <em>state management to handle the styling of SVG elements</em>.
-          </p>
-        </>
-      ),
-      demoUrl: "https://qrbox.netlify.app/",
-      image: qrGenSite,
-    },
-    {
-      name: "Spotify Playlist Maker",
-      techstack: (
-        <>
-          {reactLogo}
-          {jsLogo}
-        </>
-      ),
-      dependencies: (
-        <>
-          {netlifyLogo}
-          <p>React-Context</p>
-          <p>Spotify API</p>
-        </>
-      ),
-      description: (
-        <>
-          <p>
-            This web application makes use of the SpotifyAPI to search your
-            favorite songs and create custom playlists to upload directly to
-            Spotify. The major features for this website include searching the
-            Spotify database to find your favorite songs and creating/editing
-            custom playlist to publish to your Spotify account. This project
-            served as my way to dive into understanding core concepts around{" "}
-            <em>React Context</em>,{" "}
-            <em>handling token requests and API data</em>,{" "}
-            <em>
-              hiding important API keys for production with dotenv and through
-              Netlify
-            </em>
-            , <em>repository history management on GitHub with GitBash</em>, as
-            well as the overall workflow for SPA's in React without using major
-            libraries.{" "}
-            <strong>
-              <em>
-                You do not need to authorize your account to create the
-                playlist, only to upload!
-              </em>
-            </strong>
-          </p>
-        </>
-      ),
-      demoUrl: "https://soundstack.netlify.app",
-      image: playlistMaker,
-    },
-    {
-      name: "Ticket Authentication Site",
-      techstack: (
-        <>
-          {viteLogo}
-          {reactLogo}
-          {jsLogo}
-          {sassLogo}
-        </>
-      ),
-      dependencies: (
-        <>
-          {netlifyLogo}
+        <>{viteLogo}
           <p>React Context</p>
         </>
       ),
       description: (
         <>
           <p>
-            This website explores mock <em>form validation techniques</em> with
-            features such as being able to generate a randomized custom ticket
-            in similar format to a gift or CC. The form may only be submitted if
-            the proper mock data is supplied to the appropriate fields.
+            This is a basic movie review site built using JavaScript, React, and Vite. 
+            It allows users to search for movies, read and write reviews, and rate films. 
+            Each movie has its own page with details like the title, release date, and synopsis. 
+            Users can create accounts to log in and track their reviews and ratings. 
+            Built with React and optimized with Vite, the site offers a fast and responsive 
+            experience, fostering a community for movie enthusiasts to share their opinions 
+            and discover new films.
           </p>
+
         </>
       ),
-      demoUrl: "https://authentix.netlify.app/",
-      image: authySite,
+      demoUrl: "https://github.com/vexora-0?tab=repositories",
+      image: moviereview,
     },
     {
-      name: "Random Website Generator",
+      name: "Basic Calculator",
       techstack: (
         <>
           {htmlLogo}
@@ -180,25 +100,23 @@ export default function Projects() {
           {jsLogo}
         </>
       ),
-      dependencies: <>{netlifyLogo}</>,
+      dependencies: <>{viteLogo}</>,
       description: (
         <>
           <p>
-            This website is powered by HTML, CSS, JavaScript and{" "}
-            <em>deployed with Netlify</em>. This tool immerses users in a
-            recreation of the Windows XP operating system, complete with a
-            pseudo Microsoft Paint allowing users to create digital artworks and
-            save them locally, a pseudo Internet Explorer that serves as a
-            random website generator allowing users to visit over 100 websites
-            from all corners of the internet, and a live messaging system to
-            chat with other visitors who have visited, this project transports
-            users back in time in a trip down memory lane to relive the charm of
-            the past through a modern lens.
+            This is a basic calculator program built using Java. It provides essential 
+            arithmetic operations such as addition, subtraction, multiplication, and 
+            division. The calculator features a simple and intuitive interface with 
+            buttons for digits and operations, as well as a display screen to show 
+            current calculations and results. Designed to be lightweight and efficient, 
+            this Java-based calculator is perfect for everyday use, offering reliable 
+            performance and ease of use.
           </p>
+
         </>
       ),
-      demoUrl: "https://thedesktop.netlify.app",
-      image: webGenerator,
+      demoUrl: "https://github.com/vexora-0?tab=repositories",
+      image: Calculator,
     },
   ];
 
@@ -225,7 +143,7 @@ export default function Projects() {
                 <div className='projectDesc'>
                   {project.description}
                 </div>
-                <a target='_blank' href={project.demoUrl}>Live Demo</a>
+                <a target='_blank' href={project.demoUrl}>Github</a>
               </div>
             </section>
           );
