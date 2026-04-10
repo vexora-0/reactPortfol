@@ -1,0 +1,36 @@
+---
+/**
+ * /thanks — post-form-submission page. Quiet, brief, on brand.
+ */
+import Base from '~/layouts/Base.astro';
+---
+
+<Base title="Thanks — Bhargav.M">
+  <div class="flex min-h-[70vh] items-center px-6 py-20 md:px-10">
+    <div class="mx-auto max-w-3xl">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+        — received —
+      </p>
+      <h1
+        class="mt-8 font-serif italic text-ink"
+        style="font-size: clamp(48px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.03em"
+      >
+        thanks.<br />
+        <span class="text-accent">I'll reply.</span>
+      </h1>
+      <p class="mt-10 max-w-md text-[15px] leading-[1.6] text-ink-mid">
+        Usually within a day or two, occasionally three. If it's urgent, the
+        email button copies the address.
+      </p>
+      <div class="mt-10">
+        <a
+          href="/"
+          class="font-mono text-[11px] uppercase tracking-[0.14em] text-accent hover:underline"
+          data-trace="→ home"
+        >
+          ← home
+        </a>
+      </div>
+    </div>
+  </div>
+</Base>

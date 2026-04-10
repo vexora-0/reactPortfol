@@ -1,0 +1,119 @@
+---
+/**
+ * Case study — /work/[slug] — spec §5.3
+ *
+ * Only headliners get case study pages (getStaticPaths filters on it).
+ * Non-headliner slugs 404 cleanly because getStaticPaths never emits them.
+ *
+ * The h1 has a view-transition-name that pairs with the home page and
+ * /work index — clicking a headliner animates the title from its source
+ * position into this title slot.
+ */
+import type { GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import Reveal from '~/components/Reveal.astro';
+import CaseCallout from '~/components/CaseCallout.astro';
+import OutcomesGrid from '~/components/OutcomesGrid.astro';
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('work', (e) => e.data.headliner);
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Base title={`${entry.data.name} — Bhargav.M`} description={entry.data.tagline}>
+  <article class="px-6 pt-20 pb-20 md:px-10 md:pt-32">
+    <div class="mx-auto max-w-prose2">
+      {/* ==== HEADER ==== */}
+      <header class="mb-16 border-b border-rule pb-10">
+        <Reveal>
+          <div class="flex flex-wrap items-baseline justify-between gap-4">
+            <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+              {entry.data.folio}
+            </span>
+            <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+              {entry.data.year} · {entry.data.role} · {entry.data.status}
+            </span>
+          </div>
+          <h1
+            class="mt-8 font-serif italic text-case text-ink"
+            style={`view-transition-name: project-${entry.slug}; letter-spacing: -0.03em;`}
+          >
+            {entry.data.name}
+          </h1>
+          <p class="mt-6 max-w-xl text-[18px] leading-[1.5] text-ink-mid md:text-[20px]">
+            {entry.data.tagline}
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+            {entry.data.stack.map((tech) => <span>{tech}</span>)}
+            {entry.data.repo && (
+              <>
+                <span>·</span>
+                <a
+                  href={entry.data.repo}
+                  class="text-accent hover:underline"
+                  data-trace="↗ external"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  ↗ repo
+                </a>
+              </>
+            )}
+          </div>
+        </Reveal>
+      </header>
+
+      {/* ==== BODY (MDX) ==== */}
+      <Reveal>
+        <div class="prose-editorial">
+          <Content components={{ CaseCallout, OutcomesGrid }} />
+        </div>
+      </Reveal>
+
+      {/* ==== OUTCOMES from frontmatter (if not already rendered inside MDX) ==== */}
+      {
+        entry.data.metrics && (
+          <Reveal>
+            <OutcomesGrid metrics={entry.data.metrics} />
+          </Reveal>
+        )
+      }
+
+      {/* ==== FOOT ==== */}
+      <div class="mt-24 flex items-center justify-between border-t border-rule pt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-low">
+        <a
+          href="/work"
+          class="hover:text-accent transition-colors"
+          data-trace="→ back"
+        >
+          ← all work
+        </a>
+        {
+          entry.data.repo && (
+            <a
+              href={entry.data.repo}
+              class="hover:text-accent transition-colors"
+              data-trace="↗ external"
+              target="_blank"
+              rel="noopener"
+            >
+              ↗ repo
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</Base>

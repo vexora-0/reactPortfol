@@ -15,7 +15,7 @@ interface Props {
   delay?: number;
   class?: string;
 }
-const { as: Tag = 'div', delay = 0, class: className = '' } = Astro.props;
+const { as: Tag = 'div', delay = 0, class: className = '' } = Astro.props as Props;
 const style = delay ? `transition-delay: ${delay}ms` : undefined;
 ---
 

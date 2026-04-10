@@ -1,0 +1,210 @@
+---
+/**
+ * Colophon — /colophon — spec §5.4
+ *
+ * Three vertical sections:
+ *   1. About — quiet first-person prose + status indicator + résumé link
+ *   2. Contact — Netlify form + EmailCopy + github
+ *   3. Colophon proper — the actual colophon (type, framework, edition)
+ *
+ * The Netlify form must be pure HTML (no client island) so Netlify's
+ * build parser detects it at build time. See spec §7 risk note.
+ */
+import Base from '~/layouts/Base.astro';
+import Reveal from '~/components/Reveal.astro';
+import Rule from '~/components/Rule.astro';
+import StatusIndicator from '~/components/StatusIndicator.astro';
+import EmailCopy from '~/components/EmailCopy.astro';
+import { SITE } from '~/config/site';
+import { STATUS } from '~/config/status';
+---
+
+<Base title="Colophon — Bhargav.M">
+  <div class="px-6 pt-28 pb-16 md:px-10 md:pt-40">
+    <div class="mx-auto max-w-3xl">
+
+      {/* ============ ABOUT ============ */}
+      <section aria-labelledby="about-h">
+        <Reveal>
+          <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+            — about —
+          </p>
+          <h1
+            id="about-h"
+            class="mt-6 font-serif italic text-ink"
+            style="font-size: clamp(44px, 6vw, 80px); line-height: 0.95; letter-spacing: -0.03em"
+          >
+            A quiet<br />note from<br />the <span class="text-accent">operator.</span>
+          </h1>
+        </Reveal>
+
+        <Reveal>
+          {/* pending Bhargav review */}
+          <div class="mt-14 space-y-6 text-[16px] leading-[1.7] text-ink md:text-[17px]">
+            <p>
+              I'm Bhargav — an engineer in Bangalore. I work on the parts of
+              software that have to keep running after I've closed the laptop:
+              autonomous beverage robotics in production, multi-tenant partner
+              APIs, real-time control over MQTT, and AI applications that hold
+              up under live traffic.
+            </p>
+            <p>
+              Most of what I care about sits at the seam between machine
+              learning and production infrastructure. PromptGuard started as
+              curiosity about how agents could learn to defend themselves.
+              AudioBookAI came from wanting a cinematic reading of a novel
+              without 40 hours of human voice work. ForkFinder is what I
+              wished GitHub search felt like. In between, I ship distributed
+              systems that quietly outlast any attention I gave them.
+            </p>
+            <p>
+              I read everything, write less than I should, and try to keep the
+              work honest.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div class="mt-14 flex flex-wrap items-center gap-6 border-t border-rule pt-6">
+            <StatusIndicator size="sm" />
+            <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+              {STATUS.timezone} · {STATUS.offset}
+            </span>
+            <a
+              href="/resume.pdf"
+              class="ml-auto font-mono text-[11px] uppercase tracking-[0.14em] text-accent hover:underline"
+              data-trace="↗ résumé"
+              target="_blank"
+              rel="noopener"
+            >
+              → résumé.pdf · {SITE.year}
+            </a>
+          </div>
+        </Reveal>
+      </section>
+
+      <Rule spacing="lg" />
+
+      {/* ============ CONTACT ============ */}
+      <section aria-labelledby="contact-h">
+        <Reveal>
+          <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+            — contact —
+          </p>
+          <h2
+            id="contact-h"
+            class="mt-6 font-serif italic text-ink"
+            style="font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -0.025em"
+          >
+            Say something<br />worth saying.
+          </h2>
+        </Reveal>
+
+        <div class="mt-14 grid grid-cols-1 gap-14 md:grid-cols-2">
+          {/* --- form column --- */}
+          <Reveal>
+            {/*
+              Netlify form. MUST be static HTML — do not move inside a
+              client island or set `output: 'server'`. Netlify's build
+              parser detects this at build time by matching `data-netlify`.
+            */}
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              action="/thanks"
+              class="flex flex-col gap-6"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p class="hidden" aria-hidden="true">
+                <label>
+                  Don't fill if you're human:
+                  <input name="bot-field" tabindex="-1" autocomplete="off" />
+                </label>
+              </p>
+
+              <label class="block">
+                <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-low">
+                  name
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  class="mt-2 block w-full border-0 border-b border-rule bg-transparent py-2 text-[16px] text-ink focus:border-accent focus:outline-none focus:ring-0"
+                  autocomplete="name"
+                />
+              </label>
+
+              <label class="block">
+                <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-low">
+                  email
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  class="mt-2 block w-full border-0 border-b border-rule bg-transparent py-2 text-[16px] text-ink focus:border-accent focus:outline-none focus:ring-0"
+                  autocomplete="email"
+                />
+              </label>
+
+              <label class="block">
+                <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-low">
+                  message
+                </span>
+                <textarea
+                  name="message"
+                  rows="5"
+                  required
+                  class="mt-2 block w-full resize-none border-0 border-b border-rule bg-transparent py-2 text-[16px] text-ink focus:border-accent focus:outline-none focus:ring-0"
+                ></textarea>
+              </label>
+
+              <button
+                type="submit"
+                class="mt-2 self-start font-mono text-[11px] uppercase tracking-[0.18em] text-accent hover:underline"
+                data-trace="→ send"
+              >
+                send →
+              </button>
+            </form>
+          </Reveal>
+
+          {/* --- email column --- */}
+          <Reveal delay={80}>
+            <div class="flex h-full flex-col justify-between gap-10">
+              <EmailCopy />
+              <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+                I reply to every message that isn't a pitch deck.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <Rule spacing="lg" />
+
+      {/* ============ COLOPHON PROPER ============ */}
+      <section aria-labelledby="colophon-h">
+        <Reveal>
+          <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+            — colophon —
+          </p>
+          <div id="colophon-h" class="mt-8 font-serif italic text-[22px] leading-[1.5] text-ink-mid md:text-[26px]" style="letter-spacing: -0.015em">
+            <p>
+              Set in Instrument Serif and JetBrains Mono. Body in Inter. Built
+              with Astro. Written in MDX. Hosted on Netlify.
+            </p>
+            <p class="mt-6">
+              Edition {SITE.edition} — {SITE.year}.<br />
+              <span class="text-accent">Midnight Edition.</span>
+            </p>
+          </div>
+        </Reveal>
+      </section>
+
+    </div>
+  </div>
+</Base>

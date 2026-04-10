@@ -1,0 +1,144 @@
+---
+/**
+ * Home — / — spec §5.1
+ *
+ * Composition top to bottom:
+ *   hero → lede → featured work × 3 → interlude → index excerpt → footer
+ *
+ * Featured works are queried from the content collection (headliner: true,
+ * sorted by order). View-transition-name is applied to each project name
+ * so clicking a headliner triggers the signature title transition (§3
+ * motion signature moment #2).
+ */
+import Base from '~/layouts/Base.astro';
+import Reveal from '~/components/Reveal.astro';
+import { getCollection } from 'astro:content';
+
+const headliners = (await getCollection('work', (e) => e.data.headliner)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const indexedCount = (await getCollection('work')).length - headliners.length;
+---
+
+<Base title="Bhargav.M — Systems that don't need watching." footerVariant="home">
+  {/* ============ HERO ============ */}
+  <section class="px-6 pt-28 pb-24 md:px-10 md:pt-44">
+    <div class="mx-auto max-w-6xl">
+      <p
+        data-reveal
+        class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low"
+      >
+        — portfolio · edition 02 · 2026 —
+      </p>
+      <h1
+        data-reveal
+        class="mt-8 font-serif italic text-hero text-ink [letter-spacing:-0.035em]"
+        style="transition-delay: 80ms"
+      >
+        Systems<br />
+        that don't<br />
+        need <span class="text-accent">watching.</span>
+      </h1>
+      <p
+        data-reveal
+        class="mt-12 max-w-lede text-[16px] leading-[1.6] text-ink-mid md:text-[17px]"
+        style="transition-delay: 160ms"
+      >
+        {/* pending Bhargav review — spec §10 item 3 */}
+        I build autonomous systems — distributed beverage robotics in
+        production, multi-voice audio pipelines, reinforcement-learning
+        environments for prompt-injection defense. The work tends to live at
+        the seam between machine learning and machines that run on their own.
+      </p>
+    </div>
+  </section>
+
+  {/* ============ FEATURED WORKS ============ */}
+  <section class="px-6 pb-8 md:px-10" aria-labelledby="featured">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-16 flex items-baseline justify-between border-b border-rule pb-4">
+        <h2
+          id="featured"
+          class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low"
+        >
+          — selected work —
+        </h2>
+        <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+          {headliners.length.toString().padStart(2, '0')} shown
+        </span>
+      </div>
+      <ol class="space-y-32 md:space-y-48">
+        {
+          headliners.map((entry, i) => (
+            <li>
+              <Reveal delay={i * 60}>
+                <a
+                  href={`/work/${entry.slug}`}
+                  class="group block"
+                  data-trace="→ read"
+                >
+                  <div class="flex flex-wrap items-baseline justify-between gap-4">
+                    <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+                      {entry.data.folio}
+                    </span>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+                      {entry.data.year} · {entry.data.role}
+                    </span>
+                  </div>
+                  <h3
+                    class="mt-5 font-serif italic text-ink transition-colors group-hover:text-accent text-feat"
+                    style={`view-transition-name: project-${entry.slug}; letter-spacing: -0.028em;`}
+                  >
+                    {entry.data.name}
+                  </h3>
+                  <p class="mt-6 max-w-xl text-[16px] leading-[1.55] text-ink-mid">
+                    {entry.data.tagline}
+                  </p>
+                  <div class="mt-8 flex flex-wrap items-center gap-3 border-t border-rule pt-4">
+                    {entry.data.stack.map((tech) => (
+                      <span class="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-low">
+                        {tech}
+                      </span>
+                    ))}
+                    <span class="ml-auto font-mono text-[11px] uppercase tracking-[0.14em] text-accent transition-transform group-hover:translate-x-2">
+                      → read
+                    </span>
+                  </div>
+                </a>
+              </Reveal>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* ============ INTERLUDE ============ */}
+  <section class="px-6 pt-40 md:px-10">
+    <div class="mx-auto max-w-3xl">
+      <Reveal>
+        {/* pending Bhargav review — spec §10 item 3 */}
+        <p class="font-serif italic text-[30px] leading-[1.25] text-ink-mid md:text-[40px] md:leading-[1.2]" style="letter-spacing: -0.02em">
+          the work I'm proud of is the work that didn't need me last week.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* ============ INDEX EXCERPT ============ */}
+  <section class="px-6 pt-40 md:px-10">
+    <div class="mx-auto flex max-w-6xl items-baseline justify-between border-t border-rule pt-6">
+      <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+        — the rest —
+      </span>
+      <a
+        href="/work"
+        class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink hover:text-accent transition-colors"
+        data-trace="→ index"
+      >
+        → {indexedCount} more in /work
+      </a>
+    </div>
+  </section>
+</Base>

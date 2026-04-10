@@ -1,0 +1,146 @@
+---
+/**
+ * Work index — /work — spec §5.2
+ *
+ * A single dense table of all ten entries. Headliners (★) link to their
+ * case study page. Indexed entries expand inline (via <details>) to show
+ * their synopsis, with no outbound links — per the no-third-party-links
+ * memory rule.
+ *
+ * Placeholder entries (Hive, Escrow) render "— pending description" in
+ * ink-low mono instead of their synopsis.
+ */
+import Base from '~/layouts/Base.astro';
+import Reveal from '~/components/Reveal.astro';
+import { getCollection } from 'astro:content';
+
+const all = (await getCollection('work')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title="Work — Bhargav.M">
+  <section class="px-6 pt-28 pb-16 md:px-10 md:pt-40">
+    <div class="mx-auto max-w-5xl">
+      <Reveal>
+        <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+          — the index —
+        </p>
+        <h1
+          class="mt-6 font-serif italic text-ink [letter-spacing:-0.03em]"
+          style="font-size: clamp(48px, 7vw, 96px); line-height: 0.95"
+        >
+          Everything,<br />
+          <span class="text-accent">in one room.</span>
+        </h1>
+        <p class="mt-10 max-w-xl text-[15px] leading-[1.6] text-ink-mid">
+          Ten projects. Three have case studies — the ones I own end to
+          end. The rest are described here with the same care, but without
+          outbound links. Some are live in production; others are paused
+          or belong to someone else. All of them taught something.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="px-6 pb-32 md:px-10">
+    <div class="mx-auto max-w-5xl">
+      {/* Header row */}
+      <div
+        class="grid grid-cols-[40px_1fr_80px_90px_80px] items-baseline gap-4 border-b border-rule pb-3 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-low md:grid-cols-[60px_1fr_100px_110px_100px_24px]"
+      >
+        <span>no.</span>
+        <span>name</span>
+        <span class="hidden md:inline">year</span>
+        <span class="hidden md:inline">role</span>
+        <span class="hidden md:inline">status</span>
+        <span class="hidden md:inline" aria-hidden="true">★</span>
+      </div>
+
+      {/* Rows */}
+      <ol>
+        {
+          all.map((entry) => {
+            const isHeadliner = entry.data.headliner;
+
+            // Row inner — shared shape whether <a> or <summary>
+            const inner = (
+              <>
+                <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-low">
+                  {entry.data.folio}
+                </span>
+                <span class="font-serif italic text-[22px] leading-none text-ink transition-colors md:text-[26px]">
+                  {entry.data.name}
+                </span>
+                <span class="hidden font-mono text-[10px] uppercase tracking-[0.12em] text-ink-low md:inline">
+                  {entry.data.year}
+                </span>
+                <span class="hidden font-mono text-[10px] uppercase tracking-[0.12em] text-ink-low md:inline">
+                  {entry.data.role}
+                </span>
+                <span class="hidden font-mono text-[10px] uppercase tracking-[0.12em] text-ink-low md:inline">
+                  {entry.data.status}
+                </span>
+                <span class="hidden font-mono text-[12px] text-accent md:inline">
+                  {isHeadliner ? '★' : ''}
+                </span>
+              </>
+            );
+
+            return (
+              <li class="border-b border-rule">
+                {isHeadliner ? (
+                  <a
+                    href={`/work/${entry.slug}`}
+                    class="group grid grid-cols-[40px_1fr_80px_90px_80px] items-baseline gap-4 py-5 transition-colors hover:bg-bg-2 md:grid-cols-[60px_1fr_100px_110px_100px_24px] md:py-6"
+                    data-trace="→ read"
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <details class="group">
+                    <summary
+                      class="grid cursor-pointer grid-cols-[40px_1fr_80px_90px_80px] items-baseline gap-4 py-5 transition-colors hover:bg-bg-2 md:grid-cols-[60px_1fr_100px_110px_100px_24px] md:py-6"
+                      data-trace="→ expand"
+                    >
+                      {inner}
+                    </summary>
+                    <div class="pb-6 pl-[54px] pr-4 md:pl-[74px]">
+                      {entry.data.placeholder ? (
+                        <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+                          — pending description —
+                        </p>
+                      ) : (
+                        <>
+                          <p class="max-w-2xl text-[15px] leading-[1.6] text-ink-mid">
+                            {entry.data.synopsis}
+                          </p>
+                          {entry.data.stack.length > 0 && (
+                            <div class="mt-4 flex flex-wrap gap-3">
+                              {entry.data.stack.map((tech) => (
+                                <span class="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-low">
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </details>
+                )}
+              </li>
+            );
+          })
+        }
+      </ol>
+
+      {/* Legend */}
+      <div class="mt-10 flex flex-wrap items-center gap-6 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-low">
+        <span><span class="text-accent">★</span> — case study available</span>
+        <span class="hidden md:inline">·</span>
+        <span>· — unlinked by choice</span>
+      </div>
+    </div>
+  </section>
+</Base>
