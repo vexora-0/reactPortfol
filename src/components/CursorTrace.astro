@@ -1,0 +1,87 @@
+---
+/**
+ * CursorTrace — a quiet dot following the cursor + a label that reads
+ * out the `data-trace` attribute of whatever's under the pointer.
+ *
+ * Vanilla JS, <1 KB. Guarded by `matchMedia('(pointer: fine)')` so it
+ * never runs on touch devices. Respects `prefers-reduced-motion`.
+ *
+ * Use: add `data-trace="→ read"` (or similar) to any interactive
+ * element that wants a label while hovered.
+ *
+ * Spec: §3 motion · ambient
+ */
+---
+
+<div
+  id="cursor-trace-root"
+  class="pointer-events-none fixed inset-0 z-[90] hidden md:block"
+  aria-hidden="true"
+>
+  <div
+    id="cursor-dot"
+    class="fixed left-0 top-0 h-[6px] w-[6px] rounded-full bg-ink opacity-0 transition-[opacity,width,height,background] duration-200 will-change-transform"
+  ></div>
+  <div
+    id="cursor-label"
+    class="fixed left-0 top-0 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] text-accent opacity-0 transition-opacity duration-200 will-change-transform"
+  ></div>
+</div>
+
+<script>
+  // Only run on fine pointers (mice, trackpads). Touch devices skip entirely.
+  if (matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const dot = document.getElementById('cursor-dot') as HTMLElement | null;
+    const label = document.getElementById('cursor-label') as HTMLElement | null;
+
+    if (dot && label) {
+      let tx = 0, ty = 0;
+      let x = 0, y = 0;
+      let visible = false;
+
+      const show = () => {
+        if (!visible) {
+          visible = true;
+          dot.style.opacity = '0.9';
+        }
+      };
+
+      addEventListener('pointermove', (e) => {
+        tx = e.clientX;
+        ty = e.clientY;
+        show();
+
+        const el = (e.target as HTMLElement).closest('[data-trace]');
+        if (el) {
+          const txt = el.getAttribute('data-trace') || '';
+          label.textContent = txt;
+          label.style.opacity = '1';
+          dot.style.height = '14px';
+          dot.style.width = '14px';
+          dot.style.background = 'var(--accent)';
+        } else {
+          label.style.opacity = '0';
+          dot.style.height = '6px';
+          dot.style.width = '6px';
+          dot.style.background = 'var(--ink)';
+        }
+      }, { passive: true });
+
+      addEventListener('pointerleave', () => {
+        visible = false;
+        dot.style.opacity = '0';
+        label.style.opacity = '0';
+      });
+
+      // Lerp loop — produces the subtle trailing feel without it lagging.
+      const tick = () => {
+        x += (tx - x) * 0.22;
+        y += (ty - y) * 0.22;
+        dot.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+        label.style.transform = `translate(${x + 16}px, ${y - 18}px)`;
+        requestAnimationFrame(tick);
+      };
+      tick();
+    }
+  }
+</script>

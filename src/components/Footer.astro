@@ -1,0 +1,67 @@
+---
+/**
+ * Footer — two variants.
+ *
+ * variant="home" — the spec's big editorial closer: email rendered
+ * huge in Instrument Serif italic as the anchoring element of the
+ * home page. GitHub + colophon links below in mono.
+ *
+ * variant="inner" — thinner rule + small mono links. Used on
+ * /work, /work/[slug], /colophon, /thanks, /404.
+ *
+ * Spec: §5.1 step 7
+ */
+import { SITE } from '~/config/site';
+
+interface Props {
+  variant?: 'home' | 'inner';
+}
+const { variant = 'inner' } = Astro.props;
+---
+
+{variant === 'home' && (
+  <footer class="mt-40 border-t border-rule px-6 pb-16 pt-20 md:px-10">
+    <div class="mx-auto max-w-6xl">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+        — say something —
+      </p>
+      <a
+        href={`mailto:${SITE.email}`}
+        class="mt-6 block font-serif italic leading-none text-ink hover:text-accent transition-colors [font-size:clamp(40px,7vw,88px)]"
+        data-trace="→ mail"
+        style="letter-spacing: -0.02em"
+      >
+        {SITE.email}
+      </a>
+      <div class="mt-14 flex flex-wrap items-center justify-between gap-6 border-t border-rule pt-6 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+        <span>Bhargav Munigonda · {SITE.location}</span>
+        <div class="flex items-center gap-6">
+          <a href={SITE.github} data-trace="↗ github" class="hover:text-ink transition-colors">
+            github / {SITE.githubHandle}
+          </a>
+          <a href="/colophon" data-trace="→ colophon" class="hover:text-ink transition-colors">
+            colophon
+          </a>
+          <span>edition {SITE.edition} · {SITE.year}</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+)}
+
+{variant === 'inner' && (
+  <footer class="mt-32 border-t border-rule px-6 py-8 md:px-10">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+      <a href="/" class="hover:text-ink transition-colors" data-trace="→ home">← Bhargav.M</a>
+      <div class="flex items-center gap-6">
+        <a href={`mailto:${SITE.email}`} class="hover:text-ink transition-colors" data-trace="→ mail">
+          mail
+        </a>
+        <a href={SITE.github} class="hover:text-ink transition-colors" data-trace="↗ github">
+          github
+        </a>
+        <span>ed. {SITE.edition} · {SITE.year}</span>
+      </div>
+    </div>
+  </footer>
+)}

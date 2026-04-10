@@ -1,0 +1,45 @@
+---
+/**
+ * Header — thin sticky chrome, ~56px tall. Wordmark left, Work/Colophon
+ * nav middle-right, live status indicator far right.
+ *
+ * The status indicator is the signature moment: it IS the open-to-work
+ * signal. Pulses when open, dims when closed (spec §3.5).
+ *
+ * Spec: §5.1 step 1
+ */
+import { SITE } from '~/config/site';
+import StatusIndicator from '~/components/StatusIndicator.astro';
+---
+
+<header
+  class="sticky top-0 z-40 flex items-center justify-between gap-6 px-6 py-5 backdrop-blur-sm md:px-10"
+>
+  <a
+    href="/"
+    class="font-mono text-[13px] uppercase tracking-[0.14em] text-ink hover:text-accent transition-colors"
+    data-trace="→ home"
+  >
+    <span>{SITE.name}</span>
+  </a>
+
+  <nav class="flex items-center gap-6 md:gap-10">
+    <a
+      href="/work"
+      class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-low hover:text-ink transition-colors"
+      data-trace="→ work"
+    >
+      Work
+    </a>
+    <a
+      href="/colophon"
+      class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-low hover:text-ink transition-colors"
+      data-trace="→ colophon"
+    >
+      Colophon
+    </a>
+    <span class="hidden md:inline-block">
+      <StatusIndicator size="md" />
+    </span>
+  </nav>
+</header>

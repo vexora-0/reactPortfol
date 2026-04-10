@@ -1,0 +1,57 @@
+---
+/**
+ * EmailCopy — the email as a display element.
+ *
+ * Instrument Serif italic at a large size (treated like a headline),
+ * paired with a tiny mono "copy" button that writes to the clipboard
+ * and flashes "copied" for 1.4s. The email is also a mailto: link
+ * so keyboard users / click-happy folks can just hit it directly.
+ *
+ * Spec: §5.4 step 2
+ */
+import { SITE } from '~/config/site';
+---
+
+<div class="flex flex-col gap-4">
+  <a
+    href={`mailto:${SITE.email}`}
+    class="font-serif italic leading-none text-ink hover:text-accent transition-colors [font-size:clamp(32px,4.5vw,56px)]"
+    data-trace="→ mail"
+    style="letter-spacing: -0.015em"
+  >
+    {SITE.email}
+  </a>
+  <div class="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-low">
+    <button
+      id="email-copy-btn"
+      type="button"
+      class="hover:text-accent transition-colors"
+      data-trace="→ clipboard"
+      data-email={SITE.email}
+    >
+      copy
+    </button>
+    <span>·</span>
+    <a href={SITE.github} data-trace="↗ github" class="hover:text-accent transition-colors">
+      github / {SITE.githubHandle}
+    </a>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('email-copy-btn') as HTMLButtonElement | null;
+  if (btn) {
+    const original = btn.textContent ?? 'copy';
+    btn.addEventListener('click', async () => {
+      const email = btn.dataset.email || '';
+      try {
+        await navigator.clipboard.writeText(email);
+        btn.textContent = 'copied';
+        setTimeout(() => { btn.textContent = original; }, 1400);
+      } catch {
+        btn.textContent = 'copy failed';
+        setTimeout(() => { btn.textContent = original; }, 1400);
+      }
+    });
+  }
+</script>

@@ -1,0 +1,19 @@
+---
+/**
+ * Rule — a hairline horizontal rule. Used everywhere.
+ *
+ * Props: `spacing` ('sm'|'md'|'lg') controls the vertical margin.
+ */
+interface Props {
+  spacing?: 'sm' | 'md' | 'lg';
+}
+const { spacing = 'md' } = Astro.props;
+
+const my = {
+  sm: 'my-8',
+  md: 'my-16',
+  lg: 'my-24',
+}[spacing];
+---
+
+<hr class:list={['border-0 border-t border-rule', my]} />

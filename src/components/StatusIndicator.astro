@@ -1,0 +1,38 @@
+---
+/**
+ * Live status indicator — the pulse.
+ *
+ * Pure CSS: no JS needed for the animation. The `animate-pulse-slow`
+ * class is defined in tailwind.config.mjs and pulses for 2.4s with
+ * an ease curve that matches a calm heartbeat. When STATUS.open is
+ * false, the dot dims to ink-low and the keyframe animation is omitted.
+ *
+ * Props:
+ *   size — 'sm' used in /colophon About, 'md' used in Header
+ *
+ * Spec: §3.5
+ */
+import { STATUS } from '~/config/status';
+
+interface Props {
+  size?: 'sm' | 'md';
+}
+const { size = 'md' } = Astro.props;
+
+const dotSize = size === 'sm' ? 'h-1.5 w-1.5' : 'h-2 w-2';
+const labelSize = size === 'sm' ? 'text-[9px]' : 'text-[10px]';
+---
+
+<div class={`flex items-center gap-2 font-mono ${labelSize} uppercase tracking-[0.14em] text-ink-low`}>
+  <span
+    aria-hidden="true"
+    class:list={[
+      'inline-block rounded-full',
+      dotSize,
+      STATUS.open ? 'bg-accent animate-pulse-slow shadow-[0_0_10px_rgba(255,74,31,0.6)]' : 'bg-ink-low',
+    ]}
+  ></span>
+  <span>
+    {STATUS.open ? 'open' : 'closed'} · {STATUS.timezone}
+  </span>
+</div>
