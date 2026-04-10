@@ -1,0 +1,85 @@
+---
+/**
+ * Base layout — wraps every page. Imports global CSS, wires Astro's
+ * View Transitions, renders the shared Header / Footer / CursorTrace.
+ *
+ * Props:
+ *   title           — <title> content (usually "X — Bhargav.M")
+ *   description     — meta description; falls back to SITE.description
+ *   footerVariant   — 'home' (large email footer) or 'inner' (thin rule)
+ *
+ * Spec: §5
+ */
+import '~/styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
+import { SITE } from '~/config/site';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import CursorTrace from '~/components/CursorTrace.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  footerVariant?: 'home' | 'inner';
+}
+
+const {
+  title,
+  description = SITE.description,
+  footerVariant = 'inner',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0a0c" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/pdf" href="/resume.pdf" title="Résumé" />
+    <ViewTransitions />
+  </head>
+  <body class="min-h-screen bg-bg text-ink font-sans">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer variant={footerVariant} />
+    <CursorTrace />
+
+    <!-- Scroll reveal — a single IntersectionObserver watches every
+         [data-reveal] element and flips is-visible once. Tiny, vanilla. -->
+    <script>
+      const reveal = () => {
+        const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      };
+      reveal();
+      // Re-run on view transition navigation
+      document.addEventListener('astro:after-swap', reveal);
+    </script>
+  </body>
+</html>

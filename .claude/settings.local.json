@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(C:/Users/bharg/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh:*)",
+      "Bash(find \"C:/Users/bharg/Projects/portfolio/.superpowers/brainstorm/\" -name \"server-info\" -exec cat {} \\\\;)",
+      "Bash(\"C:/Users/bharg/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/brainstorming/scripts/stop-server.sh\" \"C:/Users/bharg/Projects/portfolio/.superpowers/brainstorm/6382-1775814360\")",
+      "Bash(mkdir -p src/pages/work src/layouts src/components src/content/work src/config src/styles src/scripts public)",
+      "Bash(cp resume5.pdf public/resume.pdf)",
+      "Bash(rm \"resume5.pdf\" \"Resume_Bhargav \\(3\\).pdf\")",
+      "Bash(npm install:*)",
+      "Bash(timeout 10 npm run dev)",
+      "Bash(npx astro:*)",
+      "Bash(curl -s -o /dev/null -w \"/ : %{http_code}  \\(%{size_download} bytes\\)\\\\n\" http://localhost:4321/)",
+      "Bash(curl -s -o /dev/null -w \"/work : %{http_code}  \\(%{size_download} bytes\\)\\\\n\" http://localhost:4321/work)",
+      "Bash(curl -s -o /dev/null -w \"/work/promptguard : %{http_code}\\\\n\" http://localhost:4321/work/promptguard)",
+      "Bash(curl -s -o /dev/null -w \"/work/audiobookai : %{http_code}\\\\n\" http://localhost:4321/work/audiobookai)",
+      "Bash(curl -s -o /dev/null -w \"/work/forkfinder : %{http_code}\\\\n\" http://localhost:4321/work/forkfinder)"
+    ]
+  }
+}

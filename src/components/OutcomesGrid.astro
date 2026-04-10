@@ -1,0 +1,44 @@
+---
+/**
+ * OutcomesGrid — small grid of metric cards. Mono labels, serif italic
+ * numbers in accent. Case study uses this near the end to show concrete
+ * numbers with space to breathe.
+ *
+ * Metrics come from the frontmatter so the MDX body stays clean:
+ * just <OutcomesGrid metrics={frontmatter.metrics} />.
+ *
+ * Spec: §5.3 step 7
+ */
+interface Metric {
+  label: string;
+  value: string;
+}
+interface Props {
+  metrics: Metric[];
+}
+const { metrics } = Astro.props;
+---
+
+<div class="my-14">
+  <div class="mb-4 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-low">
+    — outcomes —
+  </div>
+  <div class="grid grid-cols-2 gap-8 border-t border-rule pt-6 sm:grid-cols-4">
+    {
+      metrics.map((m) => (
+        <div>
+          <div class="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-low">
+            {m.label}
+          </div>
+          <div
+            class="mt-2 font-serif italic leading-none text-accent"
+            style="font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.01em"
+          >
+            {m.value}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <slot />
+</div>

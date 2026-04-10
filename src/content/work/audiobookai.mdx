@@ -1,0 +1,50 @@
+---
+folio: "F/02"
+name: "AudioBookAI"
+year: "2025"
+role: "personal"
+status: "shipped"
+headliner: true
+order: 2
+tagline: "Turning novels into multi-voice, cinematic audiobooks."
+synopsis: "A seven-stage async pipeline that extracts fiction from a PDF, detects characters, analyzes emotional beats, and renders multi-voice audio via ElevenLabs' Text-to-Dialogue API with crossfade and normalization."
+stack:
+  - FastAPI
+  - "PostgreSQL"
+  - "GPT-4o"
+  - ElevenLabs
+  - pydub
+metrics:
+  - label: "stages"
+    value: "7"
+  - label: "block types"
+    value: "5"
+  - label: "voices"
+    value: "per-character"
+  - label: "mode"
+    value: "async"
+---
+
+Audiobooks have been a one-voice-reads-everything medium for decades because the alternative is a studio full of voice actors, a director, and a calendar. AudioBookAI skips the studio. It reads a novel as a PDF, figures out who every speaking character is, asks a human to cast them from a pool of ElevenLabs voices, then renders the book in multi-voice — each character speaking in their own voice, each narration line read with the right emotion tag, each chapter crossfading into the next.
+
+The pipeline is a seven-stage async machine that pauses in the middle for a human to make casting decisions. Everything else — chapter detection, block classification, emotional analysis, speaker segmentation, synthesis, assembly — runs on its own.
+
+## Context
+
+The thing that makes this work is the ElevenLabs Text-to-Dialogue API, which is not the same as their regular text-to-speech. The dialogue endpoint accepts an array of `{text, voice_id}` objects and synthesizes them as one dialogue scene with turn-taking baked in. That one detail turns a pipeline of stitched single-voice calls into an actual cinematic read. The rest of the project is making sure every block arrives at that endpoint with the right splits and the right voices attached.
+
+<CaseCallout label="two-phase pipeline" claim="Pause for humans, then run to completion.">
+Phase one is all the cheap, offline work — extract the PDF via `pymupdf4llm`, split each chapter into 75-to-300-word blocks, classify each block as narration, dialogue, inner monologue, action, or description, and use GPT-4o to detect every speaking character in the book. The pipeline halts at `awaiting_voices` so the user can assign ElevenLabs voice IDs to each detected character via a small API. Phase two picks up from there and renders the final audio.
+</CaseCallout>
+
+<CaseCallout label="sequential analysis" claim="Blocks are analyzed one at a time on purpose.">
+Parallelizing the narrative-engine stage would be faster. It would also break the emotional arc — each block's analysis feeds the next block as context, so tension and tone carry across pages. GPT-4o runs with strict JSON-schema output (`narrative_analysis`, `annotated_text`, `voice_settings`, `speaker_segments`) so the downstream synthesizer gets structured data, not prose to re-parse.
+</CaseCallout>
+
+<CaseCallout label="multi-voice synthesis" claim="One request, many voices, per block.">
+Dialogue blocks arrive at `voice_synthesis.py` with a `speaker_segments` array already computed — who says what, in order. The service builds an `inputs` array with per-segment voice IDs and sends one Text-to-Dialogue request per block. ElevenLabs returns a single audio stream with the voices already turn-taking. No stitching, no timing guesses, no "close enough" splice marks.
+</CaseCallout>
+
+<CaseCallout label="assembly" claim="pydub for the boring parts that have to be right.">
+The final stage merges every block with a 200-millisecond crossfade inside chapters, a one-second silence between them, normalizes the whole track to −16 dBFS, and exports as 192 kbps MP3. It is the least glamorous stage and the one that decides whether the output sounds like an audiobook or a demo reel.
+</CaseCallout>

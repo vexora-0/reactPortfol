@@ -1,0 +1,51 @@
+---
+folio: "F/03"
+name: "ForkFinder"
+year: "2025"
+role: "personal"
+status: "shipped"
+headliner: true
+order: 3
+tagline: "A semantic search engine that actually knows which repos you'd fork."
+synopsis: "GitHub repo recommender using 768-dim BAAI/bge-base-en-v1.5 embeddings in Pinecone, with a composite re-ranker that weighs semantic similarity, popularity, recency, language affinity, and domain match."
+stack:
+  - FastAPI
+  - "Next.js"
+  - Pinecone
+  - bge-base-en-v1.5
+  - Supabase
+repo: "https://github.com/vexora-0/forkfinder"
+metrics:
+  - label: "embedding"
+    value: "768-dim"
+  - label: "signals"
+    value: "5"
+  - label: "tiers"
+    value: "3"
+  - label: "base"
+    value: "bge"
+---
+
+Most GitHub search is a word-match engine with a nice logo. Type "distributed locking" and you'll get every repo that happens to have both words anywhere in the README. Type a concept and you'll get nothing. ForkFinder is a recommender that tries to build the other kind of search — one that reads the shape of your interests and puts real projects in front of you.
+
+It signs you in with GitHub, ingests your own repos, your stars, and your profile README, and lets that content decide what to rank. Recommendations come back as a single composite score that weighs how semantically close a repo is to your interests, how active it is, how recent, and how well it matches the languages you already live in.
+
+## Context
+
+Vector search on code is a solved problem only if you stop reading after the first paragraph. The interesting part is the re-ranker. Cosine similarity by itself will happily surface a five-star repo nobody has touched in three years, or a brilliant architecture in a language you've never typed. ForkFinder's job was to take a good embedding and stop it from getting you fired at review time.
+
+<CaseCallout label="embeddings" claim="768 dimensions from BAAI/bge-base-en-v1.5 — the floor matters more than the ceiling.">
+Smaller embedding models fall over on code-description text — project READMEs are technical prose full of inline code fences, bullet points, and acronyms, and the base model has to read that the same way a human does. `bge-base-en-v1.5` at 768 dimensions sits on a comfortable part of the tradeoff curve: small enough to be cheap to index in Pinecone, strong enough to separate "event-driven beverage robotics" from "drink recipe app."
+</CaseCallout>
+
+<CaseCallout label="composite scoring" claim="Semantic similarity is only half the answer.">
+The final score is `0.50 × semantic + 0.15 × popularity + 0.10 × recency + 0.15 × language affinity + 0.10 × domain match`. Popularity is sigmoid-bounded so a repo with 50,000 stars doesn't crowd out a sharp 200-star tool. Recency uses an exponential decay with a 180-day half-life. Language affinity is computed from the user's top languages across their own repos and stars. The weights are the knobs; the formula is the discipline.
+</CaseCallout>
+
+<CaseCallout label="cold start" claim="A three-tier fallback so new users still get something useful.">
+Tier one is the normal flow — user profile embedding → Pinecone query → re-ranked candidates. Tier two handles users with no ingested embeddings yet — build a query from their top programming languages and run it through the same pipeline. Tier three is the globally trending corpus sorted by stars. The failure modes cascade instead of 404'ing, which matters because first impressions on a recommendation site are unforgiving.
+</CaseCallout>
+
+<CaseCallout label="ingestion" claim="The pipeline treats your profile as a document, not a row in a table.">
+The ingestion service pulls your own repos, your stars, and your profile README via the GitHub API, turns each into a small chunk, and embeds them. The result is a single profile vector plus a searchable index of everything you've already signalled interest in. Re-ingesting is cheap, and a full ingest + embed + upsert run finishes in the time it takes to make tea.
+</CaseCallout>

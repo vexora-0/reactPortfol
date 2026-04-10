@@ -1,0 +1,31 @@
+---
+/**
+ * 404 — nothing here. Small, quiet, deliberate.
+ */
+import Base from '~/layouts/Base.astro';
+---
+
+<Base title="404 — Bhargav.M">
+  <div class="flex min-h-[70vh] items-center px-6 py-20 md:px-10">
+    <div class="mx-auto max-w-3xl">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+        — 404 · nothing here —
+      </p>
+      <h1
+        class="mt-8 font-serif italic text-ink"
+        style="font-size: clamp(48px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.03em"
+      >
+        The page you wanted<br />
+        <span class="text-accent">ran off without watching.</span>
+      </h1>
+      <p class="mt-10 max-w-xl text-[15px] leading-[1.6] text-ink-mid">
+        Probably a typo, probably my fault. Head back home or try the index.
+      </p>
+      <div class="mt-10 flex items-center gap-8 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-low">
+        <a href="/" class="hover:text-accent transition-colors" data-trace="→ home">← home</a>
+        <a href="/work" class="hover:text-accent transition-colors" data-trace="→ work">/work</a>
+        <a href="/colophon" class="hover:text-accent transition-colors" data-trace="→ colophon">/colophon</a>
+      </div>
+    </div>
+  </div>
+</Base>

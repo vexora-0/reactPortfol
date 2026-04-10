@@ -1,0 +1,24 @@
+---
+/**
+ * Reveal — wraps a block so its children slide up + fade in on scroll.
+ *
+ * The actual observer lives in Base.astro (single IntersectionObserver
+ * for the whole page) and flips `is-visible` on any `[data-reveal]`
+ * element. The initial styles are in global.css.
+ *
+ * Props:
+ *   as    — the tag to render (default 'div')
+ *   delay — ms to offset the transition (default 0)
+ */
+interface Props {
+  as?: string;
+  delay?: number;
+  class?: string;
+}
+const { as: Tag = 'div', delay = 0, class: className = '' } = Astro.props as Props;
+const style = delay ? `transition-delay: ${delay}ms` : undefined;
+---
+
+<Tag data-reveal class={className} style={style}>
+  <slot />
+</Tag>

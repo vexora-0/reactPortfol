@@ -1,0 +1,30 @@
+---
+/**
+ * CaseCallout — the decision block that forms the spine of every
+ * case study. Mono label → serif italic claim → body rationale.
+ *
+ * Used via MDX: <CaseCallout label="embeddings" claim="768 dim is the
+ * right floor for semantic search over code descriptions.">
+ *   Rationale paragraph here.
+ * </CaseCallout>
+ *
+ * Spec: §5.3 step 5
+ */
+interface Props {
+  label: string;
+  claim: string;
+}
+const { label, claim } = Astro.props;
+---
+
+<aside class="my-12 border-l border-accent/50 pl-6">
+  <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-accent">
+    decision · {label}
+  </div>
+  <p class="mt-3 font-serif italic leading-[1.15] text-[24px] text-ink">
+    {claim}
+  </p>
+  <div class="mt-4 text-ink-mid text-[15px] leading-[1.6]">
+    <slot />
+  </div>
+</aside>
