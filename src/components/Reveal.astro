@@ -1,4 +1,6 @@
 ---
+import type { HTMLTag, Polymorphic } from "astro/types";
+
 /**
  * Reveal — wraps a block so its children slide up + fade in on scroll.
  *
@@ -10,12 +12,9 @@
  *   as    — the tag to render (default 'div')
  *   delay — ms to offset the transition (default 0)
  */
-interface Props {
-  as?: string;
-  delay?: number;
-  class?: string;
-}
-const { as: Tag = 'div', delay = 0, class: className = '' } = Astro.props as Props;
+type Props = Polymorphic<{ as: HTMLTag; delay?: number }>;
+
+const { as: Tag = "div", delay = 0, class: className = "" } = Astro.props as Props;
 const style = delay ? `transition-delay: ${delay}ms` : undefined;
 ---
 
