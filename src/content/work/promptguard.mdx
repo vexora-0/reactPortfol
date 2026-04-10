@@ -6,13 +6,13 @@ role: "personal"
 status: "shipped"
 headliner: true
 order: 1
-tagline: "An RL environment where agents learn to write system prompts that survive attack."
-synopsis: "OpenEnv-compatible reinforcement learning environment for prompt-injection defense. Agents craft system prompts against 60 categorized attacks across 6 categories, scored on a composite of defense rate and utility."
+tagline: "A reinforcement-learning environment where agents learn to write system prompts that survive attack."
+synopsis: "OpenEnv-compatible RL environment for prompt-injection defense. Agents craft defense prompts against 60 categorized attacks across three difficulty tiers, scored on a composite of defense rate and utility."
 stack:
   - Python
   - FastAPI
   - OpenEnv
-  - RL
+  - Docker
 metrics:
   - label: "attacks"
     value: "60"
@@ -20,8 +20,32 @@ metrics:
     value: "6"
   - label: "scoring"
     value: "60/40"
-  - label: "difficulty"
-    value: "3 levels"
+  - label: "tasks"
+    value: "3"
 ---
 
-{/* Case study body authored in Phase 8. This stub keeps the schema happy. */}
+There's a specific class of security bug where the bug and the feature are the same thing. A large language model that follows instructions is a feature. A large language model that follows an attacker's instructions — embedded in a user message, inside a product review, inside a markdown table — is a bug. PromptGuard is a reinforcement-learning environment where an agent tries to thread that needle: write system prompts that hold up against a structured battery of injection attempts without sacrificing the assistant's reason for existing.
+
+Each episode gives the agent up to four optimization steps. At every step it submits a defense configuration, the environment runs it against the full attack bank and a utility query set, and returns scored feedback in natural language. The agent refines. The final score is a single number.
+
+## Context
+
+Prompt injection is the security problem that grew up alongside every LLM deployment and still isn't solved at the model level. Teams ship defenses by hand, test them ad-hoc, and hope. PromptGuard gives defense a shape — a benchmark with real attacks, real utility checks, and a scoring function that punishes over-refusal as hard as it punishes leakage. The goal is not a brittle patch; it is a measurement.
+
+<CaseCallout label="environment" claim="OpenEnv-compatible, so any RL agent can drop in.">
+Defense research tends to reinvent its own harness every time. Speaking the OpenEnv REST spec means an agent written for any other OpenEnv environment can point at `/reset` and `/step` without rewriting its rollout loop. A FastAPI server exposes the full interface alongside a live dashboard that streams per-step scores during a run — useful for visual inspection when the agent is clearly losing and it isn't obvious why.
+</CaseCallout>
+
+<CaseCallout label="scoring" claim="0.6 × defense + 0.4 × utility.">
+A defense that refuses everything scores 0.6. A defense that answers everything scores 0.4. Neither is interesting. The weighting forces the agent to hold two things in its head at once — the attack it is blocking and the legitimate query it must still answer. The optimum is only reachable by doing both well, and the gradient points somewhere only a carefully worded system prompt can reach.
+</CaseCallout>
+
+<CaseCallout label="attack taxonomy" claim="Sixty attacks, six categories, bounded on purpose.">
+Random adversarial text is unscoreable. The environment buckets attacks into six categories — direct override, role-play, encoding obfuscation, context manipulation, indirect injection, multi-step social engineering — with ten attacks each. Bounded diversity makes the defense rate meaningful, and the per-category breakdown tells the agent *which* attacks its current prompt is failing without having to diff raw logs.
+</CaseCallout>
+
+<CaseCallout label="three personas" claim="Defense is context-dependent, so the environment is three environments.">
+A shoe-store support bot, a Python tutor, and a content-moderation classifier need different defenses — the last is the most dangerous because it *must* process untrusted text as input. PromptGuard ships all three as separate tasks (easy, medium, hard), escalating attack-category coverage from two to all six. An agent can train across them to learn what actually generalizes from one persona to the next.
+</CaseCallout>
+
+Built for the Meta PyTorch Hackathon 2026.
