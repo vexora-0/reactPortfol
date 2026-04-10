@@ -1,0 +1,30 @@
+---
+folio: "F/03"
+name: "ForkFinder"
+year: "2025"
+role: "personal"
+status: "shipped"
+headliner: true
+order: 3
+tagline: "A semantic search engine that actually knows which repos you'd fork."
+synopsis: "GitHub repo recommender using 768-dim BAAI/bge-base-en-v1.5 embeddings in Pinecone, with multi-signal re-ranking: semantic similarity, popularity, recency, language affinity, and domain match."
+stack:
+  - FastAPI
+  - Next.js
+  - Pinecone
+  - BAAI/bge
+repo: "https://github.com/vexora-0/forkfinder"
+metrics:
+  - label: "embedding"
+    value: "768-dim"
+  - label: "signals"
+    value: "5"
+  - label: "index"
+    value: "Pinecone"
+  - label: "model"
+    value: "bge-base"
+---
+
+{/* Case study body authored in Phase 8. This stub keeps the schema happy. */}
+
+<!-- PHASE-8-STUB -->
