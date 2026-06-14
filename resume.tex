@@ -1,0 +1,178 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\footnotesize{
+    {#1 \vspace{-3pt}}
+  }
+}
+
+\newcommand{\classesList}[4]{
+    \item\small{
+        {#1 #2 #3 #4 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{-3pt}\item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-8pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-7pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape Bhargav Munigonda} \\ \vspace{1pt}
+    \small +91-817-995-9886 ~ $|$ ~ \href{mailto:vexora.m04@gmail.com}{\underline{vexora.m04@gmail.com}} ~ $|$ ~
+    \href{https://github.com/vexora-0}{\underline{github.com/vexora-0}} ~ $|$ ~
+    % TODO: swap to your live portfolio URL (Netlify) before sending
+    \href{https://vexora-m04.vercel.app/}{\underline{vexora-m04.vercel.app}}
+    \vspace{-8pt}
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {BITS Pilani}{July 2023 -- July 2027}
+      {B.Sc. (Hons.) in Computer Science $|$ \textit{CGPA: 7.75}}{}
+    \resumeSubheading
+      {Scaler School of Technology}{July 2023 -- July 2027}
+      {Undergraduate Program in Computer Science $|$ \textit{CGR: 7.24}}{}
+  \resumeSubHeadingListEnd
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Software Engineer Intern}{Nov 2024 -- Present}
+      {Epicure Robotics}{Bengaluru, Karnataka}
+      \resumeItemListStart
+          \resumeItem{One of two engineers on a production autonomous beverage robotics platform for 3 product lines (Zoe, SmoothieBar, LQI) deployed across physical kiosks}
+          \resumeItem{Built an event-driven distributed system coordinating multiple kiosks sharing single physical machines --- implemented lease-based distributed locking with timeout auto-release and MongoDB transactions to prevent race conditions on concurrent cup dispensing}
+          \resumeItem{Designed a multi-tenant partner API layer with API key auth, webhook idempotency, and pickup PIN flow --- used by integration partners like SmartQueue (1M+ installs) to place orders programmatically against the fleet}
+          \resumeItem{Architected real-time machine control over MQTT (EMQX Cloud) with session-tagged logging, command relay, and firmware config push --- built companion WebSocket layer (Socket.IO) for live dashboard updates across admin, kiosk, and agent clients}
+          \resumeItem{Engineered materialized view-based recipe availability --- event bus triggers instant recomputation across all dispensers on any inventory change, so kiosks never display unavailable items}
+          \resumeItem{Built and deployed 3 types of edge kiosk applications: Android Kotlin apps with Lock Task Mode + MQTT remote control, a Flutter Linux shell (Raspberry Pi/Ubuntu) spawning and monitoring Chromium with health endpoints, and Ubuntu kiosk setup scripts}
+          \resumeItem{Implemented multi-database isolation (4 independent MongoDB Atlas connections) with per-product data separation, enabling independent scaling per product line}
+          \resumeItem{Created full supply chain system --- vendor management, purchase orders, ingredient traceability with QR tracking from source to customer, automated refill order generation, cold storage pallet billing, and field agent route management}
+        \resumeItemListEnd
+  \resumeSubHeadingListEnd
+\vspace{-16pt}
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \vspace{-8pt}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{MCPArena --- RL Environment for Adversarial Tool-Use} $|$ \emph{Python, PyTorch, TRL, Unsloth, OpenEnv} $|$ \href{https://huggingface.co/spaces/vex-0/mcparena}{\underline{hf.co/spaces/vex-0/mcparena}}}{2026}
+          \resumeItemListStart
+            \resumeItem{Built an OpenEnv RL environment that trains LLM agents inside a 30--150 tool MCP catalog seeded with misleading docstrings, prompt injection in tool returns, and leak sinks under a fixed cost budget --- 5 programmatic reward rubrics (task success, cost, adversarial avoidance, calibration, well-formed acting), no LLM judge in the reward path}
+            \resumeItem{Trained Qwen2.5-1.5B with REINFORCE + reward shaping to \textbf{34\% task-success on a held-out 30\%-adversarial pool}, beating frozen/trained 3B baselines (0\%) and the frozen 1.5B baseline (18\%); surfaced and documented a ``no-commit attractor'' reward-gaming failure mode. \textbf{Top 100 of 31,000} --- \emph{Meta PyTorch $\times$ Scaler OpenEnv Hackathon (Round 2)}}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{PromptGuard --- RL Environment for Prompt-Injection Defense} $|$ \emph{Python, FastAPI, OpenEnv} $|$ \href{https://huggingface.co/spaces/vex-0/promptGuard}{\underline{hf.co/spaces/vex-0/promptGuard}}}{2026}
+          \resumeItemListStart
+            \resumeItem{OpenEnv-compatible environment where agents iteratively craft system prompts that defend against 60 categorized prompt-injection attacks across 6 categories and 3 difficulty tiers}
+            \resumeItem{Composite reward (60\% defense rate + 40\% utility rate) with natural-language feedback for refinement --- the weighting prevents trivial all-refusal solutions. \emph{Meta PyTorch Hackathon, Round 1}}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{AudioBookAI --- Fiction-to-Cinematic-Audiobook Pipeline} $|$ \emph{FastAPI, GPT-4o, ElevenLabs} $|$ \href{https://github.com/vexora-0/AudioBookAI}{\underline{github.com/vexora-0/AudioBookAI}}}{2025}
+          \resumeItemListStart
+            \resumeItem{Two-phase async pipeline: PDF $\rightarrow$ chapter extraction $\rightarrow$ character detection $\rightarrow$ emotional narrative analysis $\rightarrow$ multi-voice synthesis (ElevenLabs Text to Dialogue API) $\rightarrow$ assembly with crossfade and normalization --- per-character voice assignment, 768-dim embeddings for narrative structure}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{ForkFinder --- GitHub Repo Recommender} $|$ \emph{FastAPI, Next.js, Pinecone} $|$ \href{https://github.com/vexora-0/forkfinder/}{\underline{github.com/vexora-0/forkfinder}}}{2025}
+          \resumeItemListStart
+            \resumeItem{Semantic search engine analyzing GitHub repos/stars to generate recommendations --- 768-dim BAAI/bge-base-en-v1.5 embeddings indexed in Pinecone with multi-signal re-ranking (similarity + popularity + recency + language affinity + domain match)}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+\vspace{-15pt}
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Python, TypeScript, Kotlin, Java, Dart, JavaScript, C} \\
+     \textbf{ML \& RL}{: PyTorch, Hugging Face (TRL/GRPO, Transformers), Unsloth (LoRA, 4-bit), REINFORCE, OpenEnv, sentence-transformers, RAG, vector search} \\
+     \textbf{Systems \& Protocols}{: MQTT, WebSocket, Socket.IO, TCP sockets, asyncio} \\
+     \textbf{Frameworks}{: FastAPI, Next.js, React, Express.js, Flutter, Spring Boot} \\
+     \textbf{Infrastructure}{: AWS (EC2, IoT Core, Amplify, Elastic Beanstalk, S3), Docker, GitHub Actions, Kubernetes, Cloudflare R2, EMQX Cloud, MongoDB Atlas, PostgreSQL, Pinecone, Supabase} \\
+     \textbf{Patterns}{: Event-driven architecture, distributed locking, materialized views, consistent hashing, multi-tenant APIs} \\
+    }}
+ \end{itemize}
+
+\end{document}
