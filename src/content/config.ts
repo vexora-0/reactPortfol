@@ -8,9 +8,8 @@
  * and never have a repo link.
  *
  * The `placeholder: true` flag marks entries whose real description
- * is deferred (Hive, Escrow) so the index can render "— pending
- * description" without the author having to remember which rows are
- * stubs.
+ * is deferred, so the index can render "— pending description" instead
+ * of a synopsis. Currently unused (no stubs in the index).
  *
  * Spec: docs/superpowers/specs/2026-04-10-portfolio-redesign-design.md §6
  */

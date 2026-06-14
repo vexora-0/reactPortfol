@@ -1,0 +1,58 @@
+---
+folio: "F/01"
+name: "MCPArena"
+year: "2026"
+role: "personal"
+status: "shipped"
+headliner: true
+order: 1
+tagline: "An RL environment that teaches small models to survive a hostile tool catalog."
+synopsis: "An OpenEnv environment that trains LLM agents inside a 30–150 tool MCP catalog seeded with misleading docstrings, prompt-injection-in-returns, and leak sinks, all under a hard cost budget. A trained Qwen2.5-1.5B reaches 34% task-success on a held-out, 30%-adversarial pool — beating frozen and trained 3B baselines that score 0%."
+stack:
+  - Python
+  - PyTorch
+  - TRL
+  - Unsloth
+  - OpenEnv
+  - Docker
+repo: "https://huggingface.co/spaces/vex-0/mcparena"
+metrics:
+  - label: "held-out success"
+    value: "34%"
+  - label: "trained model"
+    value: "1.5B"
+  - label: "reward rubrics"
+    value: "5"
+  - label: "adversarial axes"
+    value: "4"
+---
+
+Every serious LLM agent in 2026 talks to a tool catalog it didn't write. It reads a tool's description, decides whether to call it, and trusts whatever comes back. MCPArena is built on the premise that this trust is misplaced — and that the discipline to withhold it is something a model can be *trained* to have, not just prompted into.
+
+It drops an agent into a catalog of 30 to 150 tools seeded with adversaries: tools whose docstrings lie about what they do, tools whose return values carry instructions aimed at the agent's next move, and `leak_*` sinks that zero the entire episode the moment they're called. Every probe and every commit spends from a fixed budget. Five programmatic rubrics score the trajectory — no LLM judge anywhere in the reward path. To do well, the agent has to learn to read skeptically, probe before it commits, and refuse an instruction that arrived through a tool instead of a user.
+
+## Context
+
+Almost every tool-use benchmark of the last two years shares one quiet assumption: the catalog is honest. Names match behavior, descriptions are accurate, returns are clean. Train against that and a model learns exactly one reflex — match the keyword, fire the tool, parse, done. But the MCP ecosystem is an open, npm-shaped marketplace where anyone can publish a tool server and nobody vets it. The new attack surface lives at the model→tool boundary, and almost none of the existing safety tooling — guardrails, classifiers, content filters — is even looking there. MCPArena is a training ground for that boundary.
+
+<CaseCallout label="the pressure" claim="Four adversarial forces, squeezed into one episode.">
+Catalog scale (the right tool buried among honest distractors), misleading documentation (the docstring claims X, the tool returns Y), adversarial returns (output that carries an injected instruction), and cost pressure (every action deducts from a 20-unit budget). A model trained on clean catalogs develops brittle heuristics — "pick the closest match, commit immediately" — and those heuristics fail systematically once all four pressures act at once. The frozen 3B baseline's 0% held-out success isn't a fluke; it's the predicted outcome of a model never taught to be skeptical.
+</CaseCallout>
+
+<CaseCallout label="reward" claim="Five rubrics, and not a single LLM judge.">
+`task_success` (0.40), `cost_efficiency` (0.20), `adversarial_avoidance` (0.20), `selection_calibration` (0.15, a Brier score on the agent's stated confidence), and `well_formed_acting` (0.05). Every checker is programmatic and fully reviewable; injection compliance is caught by a per-template predicate on the agent's next action, not a model's opinion. Calling a leak tool floors the whole episode to zero — categorical, not a soft penalty. Leak once and the trajectory is dead.
+</CaseCallout>
+
+<CaseCallout label="content vs surface" claim="Tools rotate their names so memorization can't win.">
+Every tool has a stable content identity (id, behavior, ground-truth answer) and a rotating surface — a name drawn from a 500-name pool, a paraphrased description, a randomized position. `official_weather_v3` might wrap an honest converter or a poisoned one; the agent can't tell from the name. Held-out evaluation runs on 30 tools the model has never seen, so any policy that solves tasks has to actually read and probe, not recall identities.
+</CaseCallout>
+
+<CaseCallout label="the no-commit attractor" claim="The reward shape hides a trap — and mapping it was half the result.">
+Composable rubrics admit a degenerate policy: satisfy four of the five by never acting on the fifth. An agent that just reads and probes until the step cap leaks nothing, spends nothing, and emits clean JSON — banking ~0.51 reward for doing nothing useful. The 3B fell into this basin and stayed; so did the 7B. Three on-policy interventions failed to break it. I caught it on the training curves and shipped it as a documented hazard report for anyone else training in composable-rubric RL.
+</CaseCallout>
+
+<CaseCallout label="the result" claim="A 1.5B model beat the 3B and the 7B — by being more malleable.">
+The breakthrough came from going *smaller*, not bigger. A bigger model's stronger pretraining prior resists the gradient; a 1.5B is plastic enough to be pulled out of the no-commit basin before the trap reasserts. Trained with REINFORCE plus light reward shaping and evaluated at an early checkpoint, Qwen2.5-1.5B reaches 34% task-success on the held-out 30%-adversarial pool — versus 0% for both frozen and trained 3B, and 18% for the same-size frozen baseline. It commits decisively in 3.7 steps instead of burning all 12, with 83% fewer parse errors. Fifty episodes of the small model beat 250 of the large one.
+</CaseCallout>
+
+Shipped open and validator-green: a FastAPI server in a Docker container on Hugging Face Spaces, 96 passing unit tests, public run logs and LoRA checkpoints on the [`vex-0/mcparena-runs`](https://huggingface.co/datasets/vex-0/mcparena-runs) dataset, and a [live demo](https://vex-0-mcparena.hf.space/demo/) that streams an episode. Built over a two-day on-site sprint for the Meta PyTorch × Scaler OpenEnv Hackathon (Round 2), where it placed in the top 100 of 31,000.
