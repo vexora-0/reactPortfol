@@ -1,16 +1,37 @@
 ---
-folio: "05"
+folio: "F/02"
 name: "CareLine"
 year: "2026"
 role: "personal"
 status: "ongoing"
-headliner: false
-tagline: "A post-consultation medical AI that knows when not to answer."
-synopsis: "An agent for post-consultation patient questions that decides between three actions — answer, escalate to a clinician, or ask for clarification — instead of always replying. A deterministic temporal-validity layer (is this medication or instruction still current for this patient?) gates the model's reasoning before any answer is allowed out, and long-term memory is pluggable across local, Zep, and Supermemory backends over a longitudinal patient record."
+headliner: true
+order: 2
+tagline: "A phone call from your doctor's clinic, the day after — in your own language."
+synopsis: "A voice assistant that calls patients after a consultation and answers their follow-up questions in Telugu, Hindi or English. When it isn't sure, it doesn't guess — it asks, or hands the question to the doctor."
 stack:
-  - Python
-  - Claude API
-  - Zep
-  - Supermemory
-order: 5
+  - Voice AI
+  - Telugu · Hindi · English
+metrics:
+  - label: "languages"
+    value: "3"
+  - label: "choices per question"
+    value: "answer · ask · hand off"
+  - label: "stage"
+    value: "working, pilot next"
 ---
+
+Most patients walk out of a consultation and forget half of what they were told. Was it one tablet or two? Can I eat before this? Is this side effect normal? The doctor doesn't have time to call everyone back, so the questions go unanswered — or get answered by a search engine.
+
+CareLine is the call that comes the next day. It phones the patient, in Telugu, Hindi or English, and answers what they want to know about their own treatment.
+
+## The part I cared about most
+
+A medical assistant that always has an answer is dangerous. So CareLine has three choices for every question, not one: **answer** it if the answer is in the patient's own record and still current, **ask** a clarifying question if it's unclear, or **hand off** to the doctor if it isn't sure. Saying "let me check with your doctor" is treated as a success, not a failure.
+
+<CaseCallout label="the design rule" claim="Trust is the product.">
+A patient will only pick up the second call if the first one was right. So the safety checks sit underneath the AI, not inside it — and no new version goes out until it passes a set of real, labelled patient questions.
+</CaseCallout>
+
+## Where it is
+
+It works end to end: the call, the conversation, the hand-off to the doctor. The next step is a pilot with a real clinic — consent, real recordings, and real patients.

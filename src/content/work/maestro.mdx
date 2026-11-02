@@ -1,0 +1,43 @@
+---
+folio: "F/06"
+name: "maestro"
+year: "2026"
+role: "personal"
+status: "ongoing"
+headliner: true
+order: 6
+tagline: "Letting cloud coding agents work on private code — guarded by a 1.5B model I fine-tuned for under $3."
+synopsis: "airlock sits on localhost between your tools and any cloud model, scrubbing secrets with a fine-tuned 1.5B model before a prompt leaves the machine and failing over across a ladder of models. maestro verify is an evidence-based gate for accepting AI-written diffs."
+stack:
+  - Python
+  - FastAPI
+  - QLoRA
+  - Qwen2.5-1.5B
+  - Ollama
+metrics:
+  - label: "F1 vs a 7B"
+    value: "78% vs 80%"
+  - label: "latency"
+    value: "2.3× lower"
+  - label: "training cost"
+    value: "< $3"
+  - label: "model"
+    value: "1.5B, local"
+---
+
+Cloud coding assistants are good enough now that the question isn't whether to use them — it's what you're willing to send them. Most private codebases are full of things that shouldn't leave the building: keys, customer data, internal hostnames. maestro's answer is to keep the smart model in the cloud, and put a small, cheap, fast model on the machine as the bouncer.
+
+## Context
+
+Regex secret scanners catch the obvious (an AWS key) and miss the semantic (a database URL in a comment, a customer's name in a test fixture). A 7B local model catches more, but it is slow enough that you stop using it. The bet: a 1.5B model, fine-tuned on exactly this one job, could get close to the 7B at a fraction of the latency.
+
+<CaseCallout label="the result" claim="Small and specific almost matches big and general.">
+A QLoRA fine-tune of Qwen2.5-1.5B, trained on a single A10G for under $3, reaches 78% F1 against the 7B's 80% on a 36-case hand-written eval — at 2.3× lower latency. It trades a little recall for precision. The eval is small and I wrote it myself, so read it as directional; a bigger, independent eval is the next thing to fix.
+</CaseCallout>
+
+## What's in it
+
+- **airlock** — an OpenAI-compatible gateway on localhost that scrubs, forwards, and fails over across a ladder of models.
+- **maestro verify** — an acceptance gate for AI-written diffs: it asks for evidence (tests run, behaviour checked) before a change is accepted, wired into Claude Code as a stop hook. I use it every day.
+
+This is the pattern I keep coming back to: a small model, trained for one job, running where the data already is.

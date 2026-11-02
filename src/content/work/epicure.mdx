@@ -1,18 +1,48 @@
 ---
-folio: "06"
+folio: "F/01"
 name: "Epicure Robotics"
 year: "2024–"
 role: "work"
 status: "ongoing"
-headliner: false
-order: 6
-tagline: "Autonomous beverage robotics, shipped."
-synopsis: "Production autonomous beverage robotics platform across three product lines (Zoe, SmoothieBar, LQI). Multi-tenant API over MQTT/EMQX, lease-based distributed locking for kiosks sharing a physical machine, edge apps in Kotlin and Flutter Linux, full supply chain system."
+headliner: true
+order: 1
+tagline: "Robots that make and sell drinks on their own — two years as one of the two engineers behind them."
+synopsis: "The software behind Epicure's drink-making robots across three product lines — from the screen a customer taps, to the payments, to the cloud that runs the whole fleet. One of two engineers on it since November 2024."
 stack:
-  - TypeScript
-  - Kotlin
-  - Flutter
-  - MQTT
-  - EMQX
-  - MongoDB
+  - Robotics
+  - Payments
+  - Kiosks
+  - Fleet software
+metrics:
+  - label: "product lines"
+    value: "3"
+  - label: "open"
+    value: "24/7, nobody behind the counter"
+  - label: "engineers"
+    value: "2"
+  - label: "partner"
+    value: "SmartQ · 1M+ installs"
 ---
+
+Epicure Robotics builds machines that make drinks — smoothies, tender coconut, blended beverages — and puts them where people are, with nobody standing behind the counter. I joined in November 2024 as one of two engineers, and I've been on it since, alongside college.
+
+## Context
+
+A drink-making robot is a strange product: it's a shop with no shopkeeper. It has to greet the customer, take their money, make the drink, clean itself, and tell someone when something goes wrong — at 2 a.m., with no one around. Every part of that is software.
+
+## What I built
+
+- **The screen customers use** — choosing a drink, paying, watching it get made. I care about this as much as anything under it: if the screen confuses someone, nothing behind it matters.
+- **The fleet behind it** — orders, payments, stock, and the dashboard the operations team runs the business from, across three product lines.
+- **The link to the machine** — how the cloud tells each robot to dispense, move, lock and clean, and hears back when something goes wrong.
+- **Kiosks that look after themselves** — they start on their own, recover from crashes, and can be fixed remotely instead of with a trip across town.
+- **Partners** — a way for SmartQ, an ordering app with 1M+ installs, to send live orders straight to our machines.
+- **Supply chain** — stock tracked from the warehouse to the machine.
+
+<CaseCallout label="the lesson" claim="Unattended is a different standard.">
+When a machine runs with nobody watching, every bug costs a drink, a payment, or a customer who doesn't come back. It taught me to plan for the boring failure — the dropped Wi-Fi, the stuck door — as the main case, and to treat the customer's thirty seconds at the screen as the whole product.
+</CaseCallout>
+
+## Why it matters to what's next
+
+Two years with these machines showed me where intelligence is missing: machines that can't see what they're doing, can't explain a fault, and can't ask the cloud because the network isn't there. That's the gap I want to build into.

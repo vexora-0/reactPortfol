@@ -6,13 +6,13 @@
 export const SITE = {
   name: 'Bhargav.M',
   longName: 'Bhargav Munigonda',
-  tagline: "Systems that don't need watching.",
+  tagline: 'Small models, real machines.',
   email: 'vexora.m04@gmail.com',
   github: 'https://github.com/vexora-0',
   githubHandle: 'vexora-0',
   location: 'Bangalore, India',
-  edition: '02',
+  edition: '03',
   year: 2026,
   description:
-    "Bhargav Munigonda — engineer in Bangalore building autonomous systems, distributed machines, and AI applications.",
+    'Bhargav Munigonda — engineer in Bangalore building where AI meets hardware: robot fleets at Epicure Robotics, self-hosted LLMs in defense at Zen Technologies, and small models that run where the cloud can’t.',
 } as const;
