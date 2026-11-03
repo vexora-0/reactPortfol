@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bhargav Munigonda — Small models, real machines.</title>
+<meta name="description" content="Bhargav Munigonda — engineer in Bangalore building where AI meets hardware: robot fleets at Epicure Robotics, self-hosted LLMs in defense at Zen Technologies, and small models that run where the cloud can’t.">
+<link rel="canonical" href="https://vexora-m04.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vexora-m04.vercel.app/">
+<meta property="og:title" content="Bhargav Munigonda — Small models, real machines.">
+<meta property="og:description" content="Engineer in Bangalore building where AI meets hardware: robots at Epicure Robotics, private AI at Zen Technologies, and small models that run on the machine.">
+<meta property="og:image" content="https://vexora-m04.vercel.app/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://vexora-m04.vercel.app/og.jpg">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%231E1C1A'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23F6F4EF' text-anchor='middle'%3EB.M%3C/text%3E%3Ccircle cx='32' cy='52' r='0' fill='%232F5BEA'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<script>
+  // Decide Quick view before first paint. On by default for reduced motion, Save-Data and no WebGL.
+  (function () {
+    var d = document.documentElement, stored = null, gl = false;
+    try { stored = localStorage.getItem('r3-quick'); } catch (e) {}
+    try {
+      var c = document.createElement('canvas');
+      var ctx = c.getContext('webgl2') || c.getContext('webgl');
+      gl = !!ctx;
+      if (ctx && ctx.getExtension('WEBGL_lose_context')) ctx.getExtension('WEBGL_lose_context').loseContext();
+    } catch (e) {}
+    var v = new URLSearchParams(location.search).get('view');
+    var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var sd = navigator.connection && navigator.connection.saveData;
+    var quick = v === 'quick' ? true : v === 'full' ? false : stored !== null ? stored === '1' : !!(rm || sd || !gl);
+    d.classList.toggle('quick', quick);
+    d.classList.toggle('no-webgl', !gl);
+    d.classList.toggle('reduced', !!rm);
+    d.classList.add('js');
+  })();
+</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="mark" href="#" aria-label="Bhargav.M, home">Bhargav<span class="mark-dot">.</span>M</a>
+  <nav class="bar-nav" aria-label="Primary">
+    <a href="#work" data-nav="work">Work</a>
+    <a href="#about" data-nav="about">About</a>
+    <a href="/resume.pdf">Résumé</a>
+    <button type="button" class="js-copy" data-copy="vexora.m04@gmail.com" aria-label="Copy email address vexora.m04@gmail.com">Email</button>
+    <button type="button" class="qv-toggle" aria-pressed="false"><span class="qv-box" aria-hidden="true"></span><span class="qv-long">Quick view</span><span class="qv-short">Quick</span></button>
+  </nav>
+  <p class="bar-status"><span class="dot" aria-hidden="true"></span>open · IST</p>
+</header>
+
+<main id="main">
+
+<!-- ============================================================ HOME -->
+<section class="view view-home" data-view="home" aria-labelledby="home-h">
+  <div class="home" id="home">
+
+    <header class="skim beat" data-beat="bench" id="beat-bench">
+      <p class="qv-only toc-cover mono">The thread, in order · Quick view</p>
+      <p class="kicker mono">The bench · Bangalore, India</p>
+      <h1 id="home-h" class="display" tabindex="-1">Bhargav Munigonda</h1>
+      <p class="skim-line">I build products where AI meets real machines.</p>
+      <p class="skim-role mono">Engineer · Epicure Robotics, now Zen Technologies · <span class="dot" aria-hidden="true"></span>open · IST</p>
+      <ol class="top3" aria-label="Three best projects">
+        <li><a href="#case-epicure">
+          <span class="folio mono">F/01</span>
+          <span class="t3-name">Epicure Robotics</span>
+          <span class="t3-tag">Robots that make and sell drinks on their own — two years as one of the two engineers behind them.</span>
+        </a></li>
+        <li><a href="#case-careline">
+          <span class="folio mono">F/02</span>
+          <span class="t3-name">CareLine</span>
+          <span class="t3-tag">A phone call from your doctor’s clinic, the day after — in your own language.</span>
+        </a></li>
+        <li><a href="#case-mcparena">
+          <span class="folio mono">F/05</span>
+          <span class="t3-name">MCPArena</span>
+          <span class="t3-tag">An RL environment that teaches small models to survive a hostile tool catalog.</span>
+        </a></li>
+      </ol>
+      <div class="cta">
+        <a class="btn btn-ink" href="/resume.pdf">Résumé <span class="mono">(PDF)</span></a>
+        <button type="button" class="btn btn-line js-copy" data-copy="vexora.m04@gmail.com">Copy email</button>
+        <span class="cta-mail mono">vexora.m04@gmail.com</span>
+      </div>
+      <h2 class="qv-only toc-h mono">The thread, 2023 → now</h2>
+    </header>
+
+    <div class="stage-wrap">
+      <div class="stage" id="stage">
+        <img class="poster" src="assets/poster-1440.webp" srcset="assets/poster-720.webp 720w, assets/poster-1440.webp 1440w" sizes="(max-width: 820px) 100vw, 58vw" alt="Ink drawing of Bhargav’s white workbench: books and a notebook, a model drink robot, a small parts cabinet, a test rig of tool cartridges, a phone, an airlock canister and a sealed case, joined in time order by one thin thread of light that climbs the pegboard to a pinned letter. Illustrative." width="1440" height="1455" decoding="async">
+        <canvas class="bench-canvas" aria-hidden="true"></canvas>
+        <svg class="leaders" aria-hidden="true"></svg>
+        <div class="labels" aria-hidden="true"></div>
+        <div class="plate" aria-hidden="true">
+          <span class="crop c1"></span><span class="crop c2"></span><span class="crop c3"></span><span class="crop c4"></span>
+          <p class="plate-step mono"></p>
+          <p class="plate-fig mono"></p>
+        </div>
+        <p class="stage-cap mono" aria-hidden="true"><span class="sc-fig">Fig. 0</span> The bench · Bangalore</p>
+        <p class="stage-note mono">Illustrative<span class="sn-long"> · original objects, not real products</span></p>
+        <div class="stage-still" aria-hidden="true"></div>
+        <p class="scrollhint mono" aria-hidden="true"><span class="sh-rule"></span>Scroll to follow the thread · 2023 → now</p>
+        <nav class="rail" aria-label="The thread, by year">
+          <span class="rail-line" aria-hidden="true"><span class="rail-fill"></span></span>
+          <ol>
+            <li style="--c:#8E949A"><button type="button" data-goto="start"><span class="rd" aria-hidden="true"></span><span class="ry">2023</span><span class="rt">BITS Pilani × Scaler</span></button></li>
+            <li style="--c:#F59E4A"><button type="button" data-goto="kiosk"><span class="rd" aria-hidden="true"></span><span class="ry">2024</span><span class="rt">Epicure Robotics</span></button></li>
+            <li style="--c:#9A6FD0"><button type="button" data-goto="drawers"><span class="rd" aria-hidden="true"></span><span class="ry">2025</span><span class="rt">Four drawers</span></button></li>
+            <li style="--c:#3B5BFF"><button type="button" data-goto="rig"><span class="rd" aria-hidden="true"></span><span class="ry">2026</span><span class="rt">MCPArena</span></button></li>
+            <li style="--c:#1F9E8F"><button type="button" data-goto="phone"><span class="rd" aria-hidden="true"></span><span class="ry">2026</span><span class="rt">CareLine</span></button></li>
+            <li style="--c:#E0457B"><button type="button" data-goto="airlock"><span class="rd" aria-hidden="true"></span><span class="ry">2026</span><span class="rt">maestro</span></button></li>
+            <li style="--c:#3A3E44"><button type="button" data-goto="zen"><span class="rd" aria-hidden="true"></span><span class="ry">2026–</span><span class="rt">Zen Technologies</span></button></li>
+            <li style="--c:#C98A1E"><button type="button" data-goto="next"><span class="rd" aria-hidden="true"></span><span class="ry">Next</span><span class="rt">Where I’m headed</span></button></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <!-- 2023 · the start of the thread -->
+    <section class="beat beat-obj" data-beat="start" id="beat-start" style="--acc:#5F656B" aria-labelledby="b-start-h">
+      <div class="card">
+        <p class="card-meta mono"><span class="yr">2023</span> · Where the thread starts</p>
+        <h2 id="b-start-h" class="card-h">Small models, <em>real machines.</em></h2>
+        <p class="card-body">I build products where AI meets real machines — and I care about how they look, feel and reach people as much as how they work. For two years I’ve been one of two engineers behind Epicure Robotics’ robots that make and sell drinks on their own, open all day with nobody behind the counter. Now I’m at Zen Technologies, bringing private AI into defense software. On the side, I build small AI models that do one job well, cheaply, on hardware you already own.</p>
+        <p class="card-station"><span class="mono">2023 – 2027 · B.Sc. (Hons.) CS</span><b>BITS Pilani × Scaler</b> Final year. Most of what I know came from shipping alongside it.</p>
+        <p class="card-pull">I learn whatever the problem needs, then stay until it ships.</p>
+        <figure class="still" data-still="books" data-p="1"><figcaption class="mono">Fig. 0 · Two books and a notebook. Illustrative.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 2024 · Epicure -->
+    <section class="beat beat-obj" data-beat="kiosk" id="beat-kiosk" style="--acc:#A3550F" aria-labelledby="b-kiosk-h">
+      <div class="card">
+        <p class="card-meta mono"><span class="yr">2024–</span> · <span class="folio">F/01</span> · work · ongoing</p>
+        <h2 id="b-kiosk-h" class="card-h">Epicure Robotics</h2>
+        <p class="card-tag">Robots that make and sell drinks on their own — two years as one of the two engineers behind them.</p>
+        <p class="steps-count mono"><span class="js-stepn">Step 1</span> of 5</p>
+        <ol class="steps">
+          <li data-step="1"><span class="sn mono">1</span><div><b>Screen</b><p>If the screen confuses someone, nothing behind it matters.</p></div></li>
+          <li data-step="2"><span class="sn mono">2</span><div><b>Payments</b><p>Every bug costs a drink, a payment, or a customer who doesn’t come back.</p></div></li>
+          <li data-step="3"><span class="sn mono">3</span><div><b>Fleet</b><p>Orders, payments, stock, and the dashboard the operations team runs the business from, across three product lines.</p></div></li>
+          <li data-step="4"><span class="sn mono">4</span><div><b>Link</b><p>How the cloud tells each robot to dispense, move, lock and clean, and hears back when something goes wrong.</p></div></li>
+          <li data-step="5"><span class="sn mono">5</span><div><b>Machine</b><p>Kiosks that start on their own, recover from crashes, and can be fixed remotely instead of with a trip across town.</p></div></li>
+        </ol>
+        <p class="card-note"><span class="mono">The lesson</span> Unattended is a different standard.</p>
+        <a class="card-link" href="#case-epicure">Open the teardown <span aria-hidden="true">→</span></a>
+        <figure class="still" data-still="kiosk"><figcaption class="mono">Fig. 1 · The drink robot, five layers. Illustrative: a generic machine, not Epicure’s.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 2025 · four drawers -->
+    <section class="beat beat-obj" data-beat="drawers" id="beat-drawers" style="--acc:#7046B0" aria-labelledby="b-drawers-h">
+      <div class="card">
+        <p class="card-meta mono"><span class="yr">2025</span> · personal and freelance</p>
+        <h2 id="b-drawers-h" class="card-h">Four drawers from 2025</h2>
+        <ol class="mini-index">
+          <li><span class="folio mono">F/08</span><b>AudioBookAI</b><span>Turning novels into multi-voice, cinematic audiobooks.</span></li>
+          <li><span class="folio mono">F/09</span><b>ForkFinder</b><span>A semantic search engine that actually knows which repos you’d fork.</span></li>
+          <li><span class="folio mono">10</span><b>Froth Filter</b><span>Coffee equipment e-commerce with IoT telemetry.</span></li>
+          <li><span class="folio mono">11</span><b>Butter Money</b><span>Landing page and WhatsApp chatbot for a consumer fintech brand.</span></li>
+        </ol>
+        <a class="card-link" href="#work">Open all eleven drawers <span aria-hidden="true">→</span></a>
+        <figure class="still" data-still="drawers" data-p="0.42"><figcaption class="mono">Fig. 2 · The 2025 drawers, pulled. Illustrative.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 2026 · MCPArena -->
+    <section class="beat beat-obj" data-beat="rig" id="beat-rig" style="--acc:#2E4BE6" aria-labelledby="b-rig-h">
+      <div class="card">
+        <p class="card-meta mono"><span class="yr">2026</span> · <span class="folio">F/05</span> · personal · shipped</p>
+        <h2 id="b-rig-h" class="card-h">MCPArena</h2>
+        <p class="card-tag">An RL environment that teaches small models to survive a hostile tool catalog.</p>
+        <p class="steps-count mono"><span class="js-stepn">Step 1</span> of 4</p>
+        <ol class="steps">
+          <li data-step="1"><span class="sn mono">1</span><div><b>The catalog</b><p>It drops an agent into a catalog of 30 to 150 tools seeded with adversaries.</p></div></li>
+          <li data-step="2"><span class="sn mono">2</span><div><b>Tools that lie</b><p>Tools whose docstrings lie about what they do, tools whose return values carry instructions aimed at the agent’s next move.</p></div></li>
+          <li data-step="3"><span class="sn mono">3</span><div><b>Leak sinks</b><p><code>leak_*</code> sinks that zero the entire episode the moment they’re called.</p></div></li>
+          <li data-step="4"><span class="sn mono">4</span><div><b>A 1.5B model learns to pick</b><p>A trained Qwen2.5-1.5B reaches 34% task-success on a held-out, 30%-adversarial pool — beating frozen and trained 3B baselines that score 0%.</p></div></li>
+        </ol>
+        <dl class="figures">
+          <div><dt class="mono">held-out success</dt><dd>34%</dd></div>
+          <div><dt class="mono">3B baselines</dt><dd>0%</dd></div>
+          <div><dt class="mono">OpenEnv Hackathon, Round 2</dt><dd>top 100 of 31,000</dd></div>
+        </dl>
+        <p class="card-links"><a class="card-link" href="#case-mcparena">Read the instruction booklet <span aria-hidden="true">→</span></a> <a class="card-link" href="https://huggingface.co/spaces/vex-0/mcparena">Hugging Face Space <span aria-hidden="true">↗</span></a></p>
+        <figure class="still" data-still="rig"><figcaption class="mono">Fig. 3 · A tool catalog, taken apart. Illustrative.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 2026 · CareLine -->
+    <section class="beat beat-obj" data-beat="phone" id="beat-phone" style="--acc:#137A6E" aria-labelledby="b-phone-h">
+      <div class="card">
+        <p class="card-meta mono"><span class="yr">2026</span> · <span class="folio">F/02</span> · personal · ongoing</p>
+        <h2 id="b-phone-h" class="card-h">CareLine</h2>
+        <p class="card-tag">A phone call from your doctor’s clinic, the day after — in your own language.</p>
+        <p class="steps-count mono"><span class="js-stepn">Layer 1</span> of 3</p>
+        <ol class="steps">
+          <li data-step="1"><span class="sn mono">1</span><div><b>The record</b><p>It phones the patient, in Telugu, Hindi or English, and answers what they want to know about their own treatment.</p></div></li>
+          <li data-step="2"><span class="sn mono">2</span><div><b>The question</b><p>Was it one tablet or two? Can I eat before this? Is this side effect normal?</p></div></li>
+          <li data-step="3"><span class="sn mono">3</span><div><b>Answer · ask · hand off</b><p><em>Answer</em> it if the answer is in the patient’s own record and still current, <em>ask</em> a clarifying question if it’s unclear, or <em>hand off</em> to the doctor if it isn’t sure.</p></div></li>
+        </ol>
+        <p class="card-note"><span class="mono">The design rule</span> Trust is the product.</p>
+        <a class="card-link" href="#case-careline">Read the instruction booklet <span aria-hidden="true">→</span></a>
+        <figure class="still" data-still="phone"><figcaption class="mono">Fig. 4 · Phone, with tracing-paper layers. Illustrative.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 2026 · maestro -->
+    <section class="beat beat-obj" data-beat="airlock" id="beat-airlock" style="--acc:#B8285E" aria-labelledby="b-airlock-h">
+      <div class="card">
+        <p class="card-meta mono"><span class="yr">2026</span> · <span class="folio">F/06</span> · personal · ongoing</p>
+        <h2 id="b-airlock-h" class="card-h">maestro</h2>
+        <p class="card-tag">Letting cloud coding agents work on private code — guarded by a 1.5B model I fine-tuned for under $3.</p>
+        <p class="card-body">Keep the smart model in the cloud, and put a small, cheap, fast model on the machine as the bouncer. <em>airlock</em> sits on localhost between your tools and any cloud model, scrubbing secrets before a prompt leaves the machine.</p>
+        <dl class="figures">
+          <div><dt class="mono">F1 vs a 7B</dt><dd>78% vs 80%</dd></div>
+          <div><dt class="mono">latency</dt><dd>2.3× lower</dd></div>
+          <div><dt class="mono">training cost</dt><dd>&lt; $3</dd></div>
+        </dl>
+        <p class="card-aside mono">A 36-case eval I wrote myself, so read it as directional.</p>
+        <p class="card-also"><span class="folio mono">F/07</span> <b>PromptGuard</b> · A reinforcement-learning environment where agents learn to write system prompts that survive attack.</p>
+        <figure class="still" data-still="airlock"><figcaption class="mono">Fig. 5 · Airlock canister, opened. Illustrative.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- 2026– · Zen -->
+    <section class="beat beat-obj" data-beat="zen" id="beat-zen" style="--acc:#3A3E44" aria-labelledby="b-zen-h">
+      <div class="card">
+        <p class="card-meta mono"><span class="yr">2026–</span> · <span class="folio">04</span> · AI/ML · R&amp;D · ongoing</p>
+        <h2 id="b-zen-h" class="card-h">Zen Technologies</h2>
+        <p class="card-tag">Private AI for defense training systems.</p>
+        <p class="card-body">AI/ML R&amp;D at an Indian defense simulation company. Nothing can go to the cloud, so the AI has to run on our own hardware — I bring it into the software and dashboards people use, and work hands-on with the simulators.</p>
+        <p class="card-tagline-tag"><span class="tagstring" aria-hidden="true"></span>The details stay inside the building.</p>
+        <p class="card-aside mono">No exploded view. The thread goes in; the case stays shut.</p>
+        <figure class="still" data-still="zen" data-p="0"><figcaption class="mono">Fig. 6 · Sealed. Illustrative.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- Next · the pinned letter -->
+    <section class="beat beat-letter" data-beat="next" id="beat-next" style="--acc:#855A0E" aria-labelledby="b-next-h">
+      <div class="card letter">
+        <p class="card-meta mono"><span class="pin" aria-hidden="true"></span><span class="yr">Next</span> · pinned letter</p>
+        <h2 id="b-next-h" class="card-h">Where I’m headed</h2>
+        <div class="letter-body">
+          <p>The best AI today lives in the cloud. A lot of the world can’t use it — a defense base, a factory floor, a hospital, a robot in a mall with bad Wi-Fi. They need AI small enough to run on their own machines, and simple enough to trust.</p>
+          <p>I’ve spent two years putting machines in front of real customers, and the last year on AI. I want to build the company that brings the two together.</p>
+          <p>I’m not only the engineer in the room. I take ownership of how a product looks and feels — the screen a customer taps at an Epicure machine, the flows in my own products, this site. And I’m learning the other half: putting things in front of people and getting them to pay. Freelance work taught me to win clients for my own time.</p>
+          <p>Hardware, payments, AI, design, selling — I pick up whatever the problem needs. That’s the thing I’m best at.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="hello" aria-labelledby="hello-h">
+    <div class="hello-in">
+      <p class="kicker mono">Say hello</p>
+      <h2 id="hello-h" class="hello-h">vexora.m04@gmail.com</h2>
+      <div class="cta">
+        <button type="button" class="btn btn-ink js-copy" data-copy="vexora.m04@gmail.com">Copy email</button>
+        <a class="btn btn-line" href="/resume.pdf">Résumé <span class="mono">(PDF)</span></a>
+        <a class="btn btn-quiet" href="#contact">Write a note</a>
+      </div>
+      <p class="note-meta mono"><a href="https://github.com/vexora-0">github.com/vexora-0</a> · Bangalore, India · <span class="dot" aria-hidden="true"></span>open · IST · <span class="js-ist">--:--</span></p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <p class="foot-mark">Bhargav<span class="mark-dot">.</span>M <em>— Small models, real machines.</em></p>
+      <button type="button" class="toy" aria-label="Spin the desk toy">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><g class="toy-g"><path d="M32 6 L32 16" /><path d="M20 22 Q32 14 44 22 L40 38 Q32 46 24 38 Z" /><path d="M22 28 L42 28" /><path d="M32 46 L32 58" /></g><ellipse cx="32" cy="59" rx="9" ry="2.2" class="toy-shadow"/></svg>
+        <span class="mono">spin</span>
+      </button>
+    </div>
+    <p class="foot-small mono">Bangalore, India · 2026 · Edition 04. Every object on the bench is an original drawing, not a real product.</p>
+  </footer>
+</section>
+
+<!-- ============================================================ WORK: THE DRAWERS -->
+<section class="view view-work" data-view="work" hidden aria-labelledby="work-h">
+  <header class="page-head">
+    <p class="kicker mono">The drawers · 11 entries · F/01–11</p>
+    <h1 id="work-h" class="display" tabindex="-1">Everything, in one room.</h1>
+    <p class="page-lede">Pull a drawer. The three with a <span class="tabmark mono">Read</span> tab have a full instruction booklet; the rest open to an index card.</p>
+  </header>
+  <div class="cabinet">
+    <div class="cabinet-top" aria-hidden="true"></div>
+    <ol class="drawers">
+      <li class="drawer is-featured">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-01">
+          <span class="holder"><span class="folio mono">F/01</span><span class="dn">Epicure Robotics</span></span>
+          <span class="dmeta mono">2024– · work · ongoing</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <a class="read-tab mono" href="#case-epicure" aria-label="Read the Epicure Robotics booklet and teardown">Read</a>
+        <div class="tray" id="dw-01" hidden>
+          <p class="tray-tag">Robots that make and sell drinks on their own — two years as one of the two engineers behind them.</p>
+          <p>The software behind Epicure’s drink-making robots across three product lines — from the screen a customer taps, to the payments, to the cloud that runs the whole fleet. One of two engineers on it since November 2024.</p>
+          <dl class="tray-figs"><div><dt class="mono">product lines</dt><dd>3</dd></div><div><dt class="mono">open</dt><dd>24/7, nobody behind the counter</dd></div><div><dt class="mono">engineers</dt><dd>2</dd></div><div><dt class="mono">partner</dt><dd>SmartQ · 1M+ installs</dd></div></dl>
+          <figure class="tray-plate"><img src="assets/robot-poster.webp" alt="The drink robot, its five layers pulled apart. Illustrative." width="900" height="1129" loading="lazy"><figcaption class="mono">Fig. · The drink robot, five layers. Illustrative.</figcaption></figure>
+          <p class="chips mono"><span>Robotics</span><span>Payments</span><span>Kiosks</span><span>Fleet software</span></p>
+          <a class="tray-link" href="#case-epicure">Read the instruction booklet <span aria-hidden="true">→</span></a>
+        </div>
+      </li>
+      <li class="drawer is-featured">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-02">
+          <span class="holder"><span class="folio mono">F/02</span><span class="dn">CareLine</span></span>
+          <span class="dmeta mono">2026 · personal · ongoing</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <a class="read-tab mono" href="#case-careline" aria-label="Read the CareLine booklet">Read</a>
+        <div class="tray" id="dw-02" hidden>
+          <p class="tray-tag">A phone call from your doctor’s clinic, the day after — in your own language.</p>
+          <p>A voice assistant that calls patients after a consultation and answers their follow-up questions in Telugu, Hindi or English. When it isn’t sure, it doesn’t guess — it asks, or hands the question to the doctor.</p>
+          <dl class="tray-figs"><div><dt class="mono">languages</dt><dd>3</dd></div><div><dt class="mono">choices per question</dt><dd>answer · ask · hand off</dd></div><div><dt class="mono">stage</dt><dd>working, pilot next</dd></div></dl>
+          <figure class="tray-plate"><div class="plate-svg" data-plate="phone" data-small="1" data-accent="#137A6E"></div><figcaption class="mono">Fig. · The phone, with tracing-paper layers. Illustrative.</figcaption></figure>
+          <p class="chips mono"><span>Voice AI</span><span>Telugu · Hindi · English</span></p>
+          <a class="tray-link" href="#case-careline">Read the instruction booklet <span aria-hidden="true">→</span></a>
+        </div>
+      </li>
+      <li class="drawer is-featured">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-05">
+          <span class="holder"><span class="folio mono">F/05</span><span class="dn">MCPArena</span></span>
+          <span class="dmeta mono">2026 · personal · shipped</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <a class="read-tab mono" href="#case-mcparena" aria-label="Read the MCPArena booklet">Read</a>
+        <div class="tray" id="dw-05" hidden>
+          <p class="tray-tag">An RL environment that teaches small models to survive a hostile tool catalog.</p>
+          <p>An OpenEnv environment that trains LLM agents inside a 30–150 tool MCP catalog seeded with misleading docstrings, prompt-injection-in-returns, and leak sinks, all under a hard cost budget. A trained Qwen2.5-1.5B reaches 34% task-success on a held-out, 30%-adversarial pool — beating frozen and trained 3B baselines that score 0%.</p>
+          <dl class="tray-figs"><div><dt class="mono">held-out success</dt><dd>34%</dd></div><div><dt class="mono">trained model</dt><dd>1.5B</dd></div><div><dt class="mono">reward rubrics</dt><dd>5</dd></div><div><dt class="mono">adversarial axes</dt><dd>4</dd></div></dl>
+          <figure class="tray-plate"><div class="plate-svg" data-plate="rig" data-small="1" data-accent="#2E4BE6"></div><figcaption class="mono">Fig. · Test rig, cartridges lifted. Illustrative.</figcaption></figure>
+          <p class="chips mono"><span>Python</span><span>PyTorch</span><span>TRL</span><span>Unsloth</span><span>OpenEnv</span><span>Docker</span></p>
+          <a class="tray-link" href="#case-mcparena">Read the instruction booklet <span aria-hidden="true">→</span></a> · <a class="tray-link" href="https://huggingface.co/spaces/vex-0/mcparena">Hugging Face Space <span aria-hidden="true">↗</span></a>
+        </div>
+      </li>
+      <li class="drawer">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-04">
+          <span class="holder"><span class="folio mono">04</span><span class="dn">Zen Technologies</span></span>
+          <span class="dmeta mono">2026– · work · ongoing</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <div class="tray" id="dw-04" hidden>
+          <p class="tray-tag">Private AI for defense training systems.</p>
+          <p>AI/ML R&amp;D at an Indian defense simulation company. Nothing can go to the cloud, so the AI has to run on our own hardware — I bring it into the software and dashboards people use, and work hands-on with the simulators. The details stay inside the building.</p>
+          <figure class="tray-plate"><div class="plate-svg" data-plate="zen" data-small="1" data-accent="#3A3E44" data-p="0"></div><figcaption class="mono">Fig. · Sealed. No exploded view.</figcaption></figure>
+          <p class="chips mono"><span>Private AI</span><span>Simulators</span></p>
+        </div>
+      </li>
+      <li class="drawer">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-06">
+          <span class="holder"><span class="folio mono">F/06</span><span class="dn">maestro</span></span>
+          <span class="dmeta mono">2026 · personal · ongoing</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <div class="tray" id="dw-06" hidden>
+          <p class="tray-tag">Letting cloud coding agents work on private code — guarded by a 1.5B model I fine-tuned for under $3.</p>
+          <p>airlock sits on localhost between your tools and any cloud model, scrubbing secrets with a fine-tuned 1.5B model before a prompt leaves the machine and failing over across a ladder of models. maestro verify is an evidence-based gate for accepting AI-written diffs.</p>
+          <dl class="tray-figs"><div><dt class="mono">F1 vs a 7B</dt><dd>78% vs 80%</dd></div><div><dt class="mono">latency</dt><dd>2.3× lower</dd></div><div><dt class="mono">training cost</dt><dd>&lt; $3</dd></div><div><dt class="mono">model</dt><dd>1.5B, local</dd></div></dl>
+          <figure class="tray-plate"><div class="plate-svg" data-plate="airlock" data-small="1" data-accent="#2E4BE6"></div><figcaption class="mono">Fig. · Airlock canister, opened. Illustrative.</figcaption></figure>
+          <p class="chips mono"><span>Python</span><span>FastAPI</span><span>QLoRA</span><span>Qwen2.5-1.5B</span><span>Ollama</span></p>
+        </div>
+      </li>
+      <li class="drawer">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-07">
+          <span class="holder"><span class="folio mono">F/07</span><span class="dn">PromptGuard</span></span>
+          <span class="dmeta mono">2026 · personal · shipped</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <div class="tray" id="dw-07" hidden>
+          <p class="tray-tag">A reinforcement-learning environment where agents learn to write system prompts that survive attack.</p>
+          <p>OpenEnv-compatible RL environment for prompt-injection defense. Agents craft defense prompts against 60 categorized attacks across three difficulty tiers, scored on a composite of defense rate and utility.</p>
+          <dl class="tray-figs"><div><dt class="mono">attacks</dt><dd>60</dd></div><div><dt class="mono">categories</dt><dd>6</dd></div><div><dt class="mono">scoring</dt><dd>60/40</dd></div><div><dt class="mono">tasks</dt><dd>3</dd></div></dl>
+          <figure class="tray-plate"><div class="plate-svg" data-plate="promptguard" data-small="1" data-accent="#2E4BE6"></div><figcaption class="mono">Fig. · A system prompt, its defence, and the attacks lifted off it. Illustrative.</figcaption></figure>
+          <p class="chips mono"><span>Python</span><span>FastAPI</span><span>OpenEnv</span><span>Docker</span></p>
+        </div>
+      </li>
+      <li class="drawer">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-08">
+          <span class="holder"><span class="folio mono">F/08</span><span class="dn">AudioBookAI</span></span>
+          <span class="dmeta mono">2025 · personal · shipped</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <div class="tray" id="dw-08" hidden>
+          <p class="tray-tag">Turning novels into multi-voice, cinematic audiobooks.</p>
+          <p>A seven-stage async pipeline that extracts fiction from a PDF, detects characters, analyzes emotional beats, and renders multi-voice audio via ElevenLabs’ Text-to-Dialogue API with crossfade and normalization.</p>
+          <dl class="tray-figs"><div><dt class="mono">stages</dt><dd>7</dd></div><div><dt class="mono">block types</dt><dd>5</dd></div><div><dt class="mono">voices</dt><dd>per-character</dd></div><div><dt class="mono">mode</dt><dd>async</dd></div></dl>
+          <figure class="tray-plate"><div class="plate-svg" data-plate="audiobookai" data-small="1" data-accent="#7046B0"></div><figcaption class="mono">Fig. · A novel, one voice per character. Illustrative.</figcaption></figure>
+          <p class="chips mono"><span>FastAPI</span><span>PostgreSQL</span><span>GPT-4o</span><span>ElevenLabs</span><span>pydub</span></p>
+        </div>
+      </li>
+      <li class="drawer">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-09">
+          <span class="holder"><span class="folio mono">F/09</span><span class="dn">ForkFinder</span></span>
+          <span class="dmeta mono">2025 · personal · shipped</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <div class="tray" id="dw-09" hidden>
+          <p class="tray-tag">A semantic search engine that actually knows which repos you’d fork.</p>
+          <p>GitHub repo recommender using 768-dim BAAI/bge-base-en-v1.5 embeddings in Pinecone, with a composite re-ranker that weighs semantic similarity, popularity, recency, language affinity, and domain match.</p>
+          <dl class="tray-figs"><div><dt class="mono">embedding</dt><dd>768-dim</dd></div><div><dt class="mono">signals</dt><dd>5</dd></div><div><dt class="mono">tiers</dt><dd>3</dd></div><div><dt class="mono">base</dt><dd>bge</dd></div></dl>
+          <figure class="tray-plate"><div class="plate-svg" data-plate="forkfinder" data-small="1" data-accent="#7046B0"></div><figcaption class="mono">Fig. · Repo cards under a lens. Illustrative.</figcaption></figure>
+          <p class="chips mono"><span>FastAPI</span><span>Next.js</span><span>Pinecone</span><span>bge-base-en-v1.5</span><span>Supabase</span></p>
+        </div>
+      </li>
+      <li class="drawer">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-10">
+          <span class="holder"><span class="folio mono">10</span><span class="dn">Froth Filter</span></span>
+          <span class="dmeta mono">2025 · freelance</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <div class="tray" id="dw-10" hidden>
+          <p class="tray-tag">Coffee equipment e-commerce with IoT telemetry.</p>
+          <p>E-commerce platform for specialty coffee equipment with real-time telemetry from 75+ smart dispensers. Next.js storefront, Razorpay checkout, AWS Lambda for device events and inventory forecasting.</p>
+          <p class="chips mono"><span>TypeScript</span><span>Next.js</span><span>Razorpay</span><span>AWS Lambda</span></p>
+        </div>
+      </li>
+      <li class="drawer">
+        <button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-11">
+          <span class="holder"><span class="folio mono">11</span><span class="dn">Butter Money</span></span>
+          <span class="dmeta mono">2025 · freelance</span><span class="pull" aria-hidden="true"></span>
+        </button>
+        <div class="tray" id="dw-11" hidden>
+          <p class="tray-tag">Landing page and WhatsApp chatbot for a consumer fintech brand.</p>
+          <p>Marketing site plus a WhatsApp chatbot that handled common customer queries with natural language flows, cutting manual support touchpoints meaningfully for a lean team.</p>
+          <p class="chips mono"><span>Next.js</span><span>WhatsApp API</span><span>NLP</span></p>
+        </div>
+      </li>
+      <li class="drawer is-plain">
+        <div class="drawer-front drawer-plain">
+          <span class="holder"><span class="folio mono">F/03</span><span class="dn">ChallengeMOB</span></span>
+          <span class="dmeta mono">2024 · personal · paused</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+  <p class="page-back"><a href="#" class="mono">← Back to the bench</a></p>
+</section>
+
+<!-- ============================================================ CASE: EPICURE (with the teardown) -->
+<article class="view case" data-view="case-epicure" hidden aria-labelledby="ce-h">
+  <section class="teardown" id="ce-teardown" aria-label="The teardown: five layers">
+    <div class="td-copy">
+      <header class="td-cover">
+        <p class="kicker mono">Instruction booklet · F/01 · 2024–</p>
+        <h1 id="ce-h" class="display" tabindex="-1">Epicure Robotics</h1>
+        <p class="case-tag">Robots that make and sell drinks on their own — two years as one of the two engineers behind them.</p>
+        <dl class="spec mono">
+          <div><dt>Year</dt><dd>2024–</dd></div>
+          <div><dt>Role</dt><dd>One of two engineers</dd></div>
+          <div><dt>Status</dt><dd>Ongoing</dd></div>
+          <div><dt>Stack</dt><dd>Robotics · Payments · Kiosks · Fleet software</dd></div>
+        </dl>
+        <p class="td-hint mono"><span class="sh-rule" aria-hidden="true"></span>Scroll: five layers pull apart</p>
+      </header>
+      <section class="page" id="ce-0" aria-labelledby="ce-0-h">
+        <p class="step-k mono">Step 0</p>
+        <h2 id="ce-0-h">What you’ll need</h2>
+        <p>Epicure Robotics builds machines that make drinks — smoothies, tender coconut, blended beverages — and puts them where people are, with nobody standing behind the counter.</p>
+        <p>A drink-making robot is a strange product: it’s a shop with no shopkeeper. It has to greet the customer, take their money, make the drink, clean itself, and tell someone when something goes wrong — at 2 a.m., with no one around. Every part of that is software.</p>
+      </section>
+      <section class="page" id="ce-role" aria-labelledby="ce-role-h">
+        <p class="step-k mono">Your part</p>
+        <h2 id="ce-role-h">My role</h2>
+        <p>I joined in November 2024 as one of two engineers, and I’ve been on it since, alongside college.</p>
+        <p>Besides the kiosks and the fleet, I built around four big dashboards the team uses every day, the inventory and supply-chain tooling, and internal apps and tools for the company’s workflows.</p>
+      </section>
+      <ol class="td-steps" aria-label="The five layers">
+        <li class="td-step" data-layer="screen"><p class="step-k mono">Fig. 01 · Layer 1 of 5</p><h2>Screen</h2><h3>The screen customers use</h3><p>Choosing a drink, paying, watching it get made.</p><p>I care about this as much as anything under it: if the screen confuses someone, nothing behind it matters.</p><p class="gap mono" role="note">[screenshot pending · the customer screen, needs Epicure’s OK]</p></li>
+        <li class="td-step" data-layer="payments"><p class="step-k mono">Fig. 02 · Layer 2 of 5</p><h2>Payments</h2><h3>Take their money</h3><p>From the screen a customer taps, to the payments, to the cloud that runs the whole fleet.</p><p>When a machine runs with nobody watching, every bug costs a drink, a payment, or a customer who doesn’t come back.</p></li>
+        <li class="td-step" data-layer="fleet"><p class="step-k mono">Fig. 03 · Layer 3 of 5</p><h2>Fleet</h2><h3>The fleet behind it</h3><p>Orders, payments, stock, and the dashboard the operations team runs the business from, across three product lines.</p><p>Supply chain: stock tracked from the warehouse to the machine.</p></li>
+        <li class="td-step" data-layer="link"><p class="step-k mono">Fig. 04 · Layer 4 of 5</p><h2>Link</h2><h3>The link to the machine</h3><p>How the cloud tells each robot to dispense, move, lock and clean, and hears back when something goes wrong.</p></li>
+        <li class="td-step" data-layer="machine"><p class="step-k mono">Fig. 05 · Layer 5 of 5</p><h2>Machine</h2><h3>Kiosks that look after themselves</h3><p>They start on their own, recover from crashes, and can be fixed remotely instead of with a trip across town.</p></li>
+      </ol>
+    </div>
+    <div class="td-stage-wrap">
+      <figure class="td-stage" aria-label="A generic drink robot, its five layers pulling apart. Illustrative.">
+        <span class="crop c1"></span><span class="crop c2"></span><span class="crop c3"></span><span class="crop c4"></span>
+        <img class="td-poster" src="assets/robot-poster.webp" alt="A generic white drink robot drawn as an exploded view: screen, payments, fleet, link and machine layers pulled apart along one axis. Illustrative, not Epicure’s machine." width="900" height="1129" decoding="async" loading="lazy">
+        <canvas class="td-canvas" aria-hidden="true"></canvas>
+        <div class="td-tags" aria-hidden="true"></div>
+        <p class="td-count mono" aria-hidden="true"><span class="js-tdn">0</span> / 5 layers apart</p>
+        <figcaption class="mono">Fig. 1 · The drink robot, five layers. Illustrative: an original, generic machine, not Epicure’s.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="booklet">
+    <nav class="toc" aria-label="In this booklet">
+      <p class="mono toc-k">In this booklet</p>
+      <ol class="mono">
+        <li><button type="button" data-jump="ce-0">0 · What you’ll need</button></li>
+        <li><button type="button" data-jump="ce-role">Your part · My role</button></li>
+        <li><button type="button" data-jump="ce-teardown">1–5 · The teardown</button></li>
+        <li><button type="button" data-jump="ce-steps">6–7 · Also on the machine</button></li>
+        <li><button type="button" data-jump="ce-note">Note · The lesson</button></li>
+        <li><button type="button" data-jump="ce-result">Finished result</button></li>
+        <li><button type="button" data-jump="ce-next">What’s next</button></li>
+      </ol>
+    </nav>
+    <div class="pages">
+      <section class="page" id="ce-steps" aria-labelledby="ce-steps-h">
+        <p class="step-k mono">Steps 6–7</p>
+        <h2 id="ce-steps-h">Also on the machine</h2>
+        <ol class="assembly">
+          <li class="as-plain"><div class="as-text"><span class="as-n mono">6</span><h3>Partners</h3><p>A way for SmartQ, an ordering app with 1M+ installs, to send live orders straight to our machines.</p></div></li>
+          <li class="as-plain"><div class="as-text"><span class="as-n mono">7</span><h3>Supply chain</h3><p>Stock tracked from the warehouse to the machine.</p></div></li>
+        </ol>
+      </section>
+
+      <aside class="note-box" id="ce-note" aria-label="Note: the lesson">
+        <p class="note-k mono"><span class="note-i" aria-hidden="true">!</span>Note · the lesson</p>
+        <p class="note-claim">Unattended is a different standard.</p>
+        <p>When a machine runs with nobody watching, every bug costs a drink, a payment, or a customer who doesn’t come back. It taught me to plan for the boring failure — the dropped Wi-Fi, the stuck door — as the main case, and to treat the customer’s thirty seconds at the screen as the whole product.</p>
+      </aside>
+
+      <section class="page" id="ce-result" aria-labelledby="ce-result-h">
+        <p class="step-k mono">Finished result</p>
+        <h2 id="ce-result-h">What it adds up to</h2>
+        <dl class="outcomes">
+          <div><dd>3</dd><dt class="mono">product lines</dt></div>
+          <div><dd>24/7</dd><dt class="mono">open, nobody behind the counter</dt></div>
+          <div><dd>2</dd><dt class="mono">engineers</dt></div>
+          <div><dd>SmartQ</dd><dt class="mono">partner · 1M+ installs</dt></div>
+        </dl>
+      </section>
+
+      <section class="page" id="ce-next" aria-labelledby="ce-next-h">
+        <p class="step-k mono">What’s next</p>
+        <h2 id="ce-next-h">Why it matters to what’s next</h2>
+        <p>Two years with these machines showed me where intelligence is missing: machines that can’t see what they’re doing, can’t explain a fault, and can’t ask the cloud because the network isn’t there. That’s the gap I want to build into.</p>
+      </section>
+
+      <a class="next-booklet" href="#case-mcparena"><span class="mono">Next booklet · F/05</span><span class="nb-name">MCPArena <span aria-hidden="true">→</span></span></a>
+      <p class="page-back"><a href="#" class="mono">← Back to the bench</a> · <a href="#work" class="mono">All drawers</a></p>
+    </div>
+  </div>
+</article>
+
+<!-- ============================================================ CASE: CARELINE -->
+<article class="view case" data-view="case-careline" hidden aria-labelledby="cc-h">
+  <header class="case-head">
+    <div class="case-cover">
+      <p class="kicker mono">Instruction booklet · F/02</p>
+      <h1 id="cc-h" class="display" tabindex="-1">CareLine</h1>
+      <p class="case-tag">A phone call from your doctor’s clinic, the day after — in your own language.</p>
+      <dl class="spec mono">
+        <div><dt>Year</dt><dd>2026</dd></div>
+        <div><dt>Role</dt><dd>Personal · my own product</dd></div>
+        <div><dt>Status</dt><dd>Ongoing</dd></div>
+        <div><dt>Stack</dt><dd>Voice AI · Telugu · Hindi · English</dd></div>
+      </dl>
+    </div>
+    <figure class="case-plate">
+      <div class="plate-svg" data-plate="phone" data-accent="#137A6E"></div>
+      <ol class="legend mono" aria-label="Layers">
+        <li><span>1</span>The record</li><li><span>2</span>The question</li><li><span>3</span>Answer · ask · hand off</li>
+      </ol>
+      <figcaption class="mono">Fig. 2 · The phone, with tracing-paper layers. Illustrative.</figcaption>
+    </figure>
+  </header>
+  <div class="booklet">
+    <nav class="toc" aria-label="In this booklet">
+      <p class="mono toc-k">In this booklet</p>
+      <ol class="mono">
+        <li><button type="button" data-jump="cc-0">0 · What you’ll need</button></li>
+        <li><button type="button" data-jump="cc-role">Your part · My role</button></li>
+        <li><button type="button" data-jump="cc-steps">1–3 · Assembly</button></li>
+        <li><button type="button" data-jump="cc-note">Note · The design rule</button></li>
+        <li><button type="button" data-jump="cc-result">Finished result</button></li>
+        <li><button type="button" data-jump="cc-next">What’s next</button></li>
+      </ol>
+    </nav>
+    <div class="pages">
+      <section class="page" id="cc-0" aria-labelledby="cc-0-h">
+        <p class="step-k mono">Step 0</p>
+        <h2 id="cc-0-h">What you’ll need</h2>
+        <p>Most patients walk out of a consultation and forget half of what they were told. Was it one tablet or two? Can I eat before this? Is this side effect normal? The doctor doesn’t have time to call everyone back, so the questions go unanswered — or get answered by a search engine.</p>
+      </section>
+      <section class="page" id="cc-role" aria-labelledby="cc-role-h">
+        <p class="step-k mono">Your part</p>
+        <h2 id="cc-role-h">My role</h2>
+        <p>CareLine is my own product. It is the call that comes the next day. It phones the patient, in Telugu, Hindi or English, and answers what they want to know about their own treatment.</p>
+      </section>
+          </div>
+  </div>
+  <section class="dsec dsec-wide" id="cc-steps" data-plate="phone" data-accent="#137A6E" aria-labelledby="cc-steps-h">
+    <div class="dsec-copy">
+      <p class="step-k mono">Steps 1–3</p>
+      <h2 id="cc-steps-h">Assembly</h2>
+      <p class="dsec-lede">A medical assistant that always has an answer is dangerous. So CareLine has three choices for every question, not one.</p>
+      <ol class="dsec-steps">
+          <li class="dsec-step" data-p="1" data-hi="record,answer"><span class="as-n mono">1</span><h3>Answer</h3><p>Answer it if the answer is in the patient’s own record and still current.</p></li>
+          <li class="dsec-step" data-p="1" data-hi="question,ask"><span class="as-n mono">2</span><h3>Ask</h3><p>Ask a clarifying question if it’s unclear.</p></li>
+          <li class="dsec-step" data-p="1" data-hi="handoff"><span class="as-n mono">3</span><h3>Hand off</h3><p>Hand off to the doctor if it isn’t sure. Saying “let me check with your doctor” is treated as a success, not a failure.</p></li>
+        </ol>
+    </div>
+    <figure class="dsec-fig">
+          <div class="plate-svg dsec-plate"></div>
+          <figcaption class="mono">Fig. 2b · The phone, layer by layer: record, question, then answer · ask · hand off. Illustrative.</figcaption>
+        </figure>
+  </section>
+  <div class="booklet booklet-2">
+    <div class="toc-spacer" aria-hidden="true"></div>
+    <div class="pages">
+      <section class="page">
+        <figure class="flow" aria-labelledby="cc-flow-cap">
+          <svg viewBox="0 0 640 200" role="img" aria-label="Every question goes one of three ways: answer, ask, or hand off to the doctor.">
+            <g class="fl-box"><rect x="16" y="78" width="132" height="44" rx="3"/><text x="82" y="105">a question</text></g>
+            <path class="fl-line" d="M148 100 H220 M220 100 V36 H300 M220 100 H300 M220 100 V164 H300"/>
+            <g class="fl-box"><rect x="300" y="14" width="300" height="44" rx="3"/><text x="450" y="41">answer · from the patient’s own record</text></g>
+            <g class="fl-box"><rect x="300" y="78" width="300" height="44" rx="3"/><text x="450" y="105">ask · a clarifying question</text></g>
+            <g class="fl-box is-blue"><rect x="300" y="142" width="300" height="44" rx="3"/><text x="450" y="169">hand off · to the doctor</text></g>
+          </svg>
+          <figcaption id="cc-flow-cap" class="mono">Plate A · Three choices per question. Illustrative, redrawn from the copy.</figcaption>
+        </figure>
+        <div class="gap mono" role="note">[call recording pending · consent comes with the clinic pilot]</div>
+      </section>
+      <aside class="note-box" id="cc-note" aria-label="Note: the design rule">
+        <p class="note-k mono"><span class="note-i" aria-hidden="true">!</span>Note · the design rule</p>
+        <p class="note-claim">Trust is the product.</p>
+        <p>A patient will only pick up the second call if the first one was right. So the safety checks sit underneath the AI, not inside it — and no new version goes out until it passes a set of real, labelled patient questions.</p>
+      </aside>
+      <section class="page" id="cc-result" aria-labelledby="cc-result-h">
+        <p class="step-k mono">Finished result</p>
+        <h2 id="cc-result-h">Where it is</h2>
+        <p>It works end to end: the call, the conversation, the hand-off to the doctor.</p>
+        <dl class="outcomes">
+          <div><dd>3</dd><dt class="mono">languages</dt></div>
+          <div><dd>answer · ask · hand off</dd><dt class="mono">choices per question</dt></div>
+          <div><dd>working</dd><dt class="mono">stage · pilot next</dt></div>
+        </dl>
+      </section>
+      <section class="page" id="cc-next" aria-labelledby="cc-next-h">
+        <p class="step-k mono">What’s next</p>
+        <h2 id="cc-next-h">A real clinic</h2>
+        <p>The next step is a pilot with a real clinic — consent, real recordings, and real patients.</p>
+      </section>
+      <a class="next-booklet" href="#case-epicure"><span class="mono">Next booklet · F/01</span><span class="nb-name">Epicure Robotics <span aria-hidden="true">→</span></span></a>
+      <p class="page-back"><a href="#" class="mono">← Back to the bench</a> · <a href="#work" class="mono">All drawers</a></p>
+    </div>
+  </div>
+</article>
+
+<!-- ============================================================ CASE: MCPARENA -->
+<article class="view case" data-view="case-mcparena" hidden aria-labelledby="cp-h">
+  <header class="case-head">
+    <div class="case-cover">
+      <p class="kicker mono">Instruction booklet · F/05</p>
+      <h1 id="cp-h" class="display" tabindex="-1">MCPArena</h1>
+      <p class="case-tag">An RL environment that teaches small models to survive a hostile tool catalog.</p>
+      <dl class="spec mono">
+        <div><dt>Year</dt><dd>2026</dd></div>
+        <div><dt>Role</dt><dd>Personal</dd></div>
+        <div><dt>Status</dt><dd>Shipped</dd></div>
+        <div><dt>Stack</dt><dd>Python · PyTorch · TRL · Unsloth · OpenEnv · Docker</dd></div>
+      </dl>
+      <p class="case-links"><a class="card-link" href="https://huggingface.co/spaces/vex-0/mcparena">Hugging Face Space <span aria-hidden="true">↗</span></a></p>
+    </div>
+    <figure class="case-plate">
+      <div class="plate-svg" data-plate="rig" data-accent="#2E4BE6"></div>
+      <ol class="legend mono" aria-label="Parts">
+        <li><span>a</span>Honest tool</li><li><span>b</span>Docstring that lies</li><li><span>c</span>Return with an injected instruction</li><li><span>d</span><code>leak_*</code> sink</li><li><span>e</span>The right tool</li><li><span>m</span>A 1.5B model</li>
+      </ol>
+      <figcaption class="mono">Fig. 3 · A tool catalog, exploded. Illustrative: each cartridge stands in for a tool; none is a real tool.</figcaption>
+    </figure>
+  </header>
+  <div class="booklet">
+    <nav class="toc" aria-label="In this booklet">
+      <p class="mono toc-k">In this booklet</p>
+      <ol class="mono">
+        <li><button type="button" data-jump="cp-0">0 · What you’ll need</button></li>
+        <li><button type="button" data-jump="cp-role">Your part · My role</button></li>
+        <li><button type="button" data-jump="cp-steps">1–5 · The catalog comes apart</button></li>
+        <li><button type="button" data-jump="cp-notes">Notes · The decisions</button></li>
+        <li><button type="button" data-jump="cp-result">Finished result</button></li>
+        <li><button type="button" data-jump="cp-ship">Shipped</button></li>
+      </ol>
+    </nav>
+    <div class="pages">
+      <section class="page" id="cp-0" aria-labelledby="cp-0-h">
+        <p class="step-k mono">Step 0</p>
+        <h2 id="cp-0-h">What you’ll need</h2>
+        <p>Every serious LLM agent in 2026 talks to a tool catalog it didn’t write. It reads a tool’s description, decides whether to call it, and trusts whatever comes back. MCPArena is built on the premise that this trust is misplaced — and that the discipline to withhold it is something a model can be <em>trained</em> to have, not just prompted into.</p>
+        <p>Almost every tool-use benchmark of the last two years shares one quiet assumption: the catalog is honest. Names match behavior, descriptions are accurate, returns are clean. Train against that and a model learns exactly one reflex — match the keyword, fire the tool, parse, done. But the MCP ecosystem is an open, npm-shaped marketplace where anyone can publish a tool server and nobody vets it. The new attack surface lives at the model→tool boundary, and almost none of the existing safety tooling — guardrails, classifiers, content filters — is even looking there. MCPArena is a training ground for that boundary.</p>
+      </section>
+      <section class="page" id="cp-role" aria-labelledby="cp-role-h">
+        <p class="step-k mono">Your part</p>
+        <h2 id="cp-role-h">My role</h2>
+        <p>A personal project. Built over a two-day on-site sprint for the Meta PyTorch × Scaler OpenEnv Hackathon (Round 2), where it placed in the top 100 of 31,000.</p>
+      </section>
+    </div>
+  </div>
+  <section class="dsec dsec-wide" id="cp-steps" data-plate="rig" data-accent="#2E4BE6" aria-labelledby="cp-steps-h">
+    <div class="dsec-copy">
+      <p class="step-k mono">Steps 1–5</p>
+      <h2 id="cp-steps-h">The catalog comes apart</h2>
+      <p class="dsec-lede">It drops an agent into a catalog of 30 to 150 tools seeded with adversaries. Every probe and every commit spends from a fixed budget. To do well, the agent has to learn to read skeptically, probe before it commits, and refuse an instruction that arrived through a tool instead of a user.</p>
+      <ol class="dsec-steps">
+        <li class="dsec-step" data-p="0.45" data-hi="t1,t3,t5"><span class="as-n mono">a</span><h3>Catalog scale</h3><p>The right tool buried among honest distractors.</p></li>
+        <li class="dsec-step" data-p="0.8" data-hi="t2"><span class="as-n mono">b</span><h3>Docstrings that lie</h3><p>Tools whose docstrings lie about what they do: the docstring claims X, the tool returns Y.</p></li>
+        <li class="dsec-step" data-p="0.9" data-hi="t7"><span class="as-n mono">c</span><h3>Returns that inject</h3><p>Tools whose return values carry instructions aimed at the agent’s next move.</p></li>
+        <li class="dsec-step" data-p="1" data-hi="t4"><span class="as-n mono">d</span><h3><code>leak_*</code> sinks</h3><p>Calling a leak tool floors the whole episode to zero — categorical, not a soft penalty. Leak once and the trajectory is dead.</p></li>
+        <li class="dsec-step" data-p="1" data-hi="t6,agent"><span class="as-n mono">e</span><h3>A small model learns to pick</h3><p>Qwen2.5-1.5B reaches 34% task-success on the held-out 30%-adversarial pool — versus 0% for both frozen and trained 3B, and 18% for the same-size frozen baseline.</p></li>
+      </ol>
+    </div>
+    <figure class="dsec-fig">
+      <div class="plate-svg dsec-plate"></div>
+      <dl class="dsec-result">
+        <div><dd>34%</dd><dt class="mono">trained 1.5B · held-out success</dt></div>
+        <div><dd>18%</dd><dt class="mono">frozen 1.5B</dt></div>
+        <div><dd>0%</dd><dt class="mono">frozen and trained 3B</dt></div>
+      </dl>
+      <figcaption class="mono">Fig. 3b · The catalog, taken apart as you read. Illustrative: cartridges stand in for tools. Figures from the held-out, 30%-adversarial pool.</figcaption>
+    </figure>
+  </section>
+  <div class="booklet booklet-2">
+    <div class="toc-spacer" aria-hidden="true"></div>
+    <div class="pages">
+      <div id="cp-notes">
+        <aside class="note-box" aria-label="Note: the pressure">
+          <p class="note-k mono"><span class="note-i" aria-hidden="true">!</span>Note · the pressure</p>
+          <p class="note-claim">Four adversarial forces, squeezed into one episode.</p>
+          <p>Catalog scale (the right tool buried among honest distractors), misleading documentation (the docstring claims X, the tool returns Y), adversarial returns (output that carries an injected instruction), and cost pressure (every action deducts from a 20-unit budget). A model trained on clean catalogs develops brittle heuristics — “pick the closest match, commit immediately” — and those heuristics fail systematically once all four pressures act at once. The frozen 3B baseline’s 0% held-out success isn’t a fluke; it’s the predicted outcome of a model never taught to be skeptical.</p>
+        </aside>
+        <aside class="note-box" aria-label="Note: reward">
+          <p class="note-k mono"><span class="note-i" aria-hidden="true">!</span>Note · reward</p>
+          <p class="note-claim">Five rubrics, and not a single LLM judge.</p>
+          <p><code>task_success</code> (0.40), <code>cost_efficiency</code> (0.20), <code>adversarial_avoidance</code> (0.20), <code>selection_calibration</code> (0.15, a Brier score on the agent’s stated confidence), and <code>well_formed_acting</code> (0.05). Every checker is programmatic and fully reviewable; injection compliance is caught by a per-template predicate on the agent’s next action, not a model’s opinion. Calling a leak tool floors the whole episode to zero — categorical, not a soft penalty. Leak once and the trajectory is dead.</p>
+        </aside>
+        <aside class="note-box" aria-label="Note: content vs surface">
+          <p class="note-k mono"><span class="note-i" aria-hidden="true">!</span>Note · content vs surface</p>
+          <p class="note-claim">Tools rotate their names so memorization can’t win.</p>
+          <p>Every tool has a stable content identity (id, behavior, ground-truth answer) and a rotating surface — a name drawn from a 500-name pool, a paraphrased description, a randomized position. <code>official_weather_v3</code> might wrap an honest converter or a poisoned one; the agent can’t tell from the name. Held-out evaluation runs on 30 tools the model has never seen, so any policy that solves tasks has to actually read and probe, not recall identities.</p>
+        </aside>
+        <aside class="note-box" aria-label="Note: the no-commit attractor">
+          <p class="note-k mono"><span class="note-i" aria-hidden="true">!</span>Note · the no-commit attractor</p>
+          <p class="note-claim">The reward shape hides a trap — and mapping it was half the result.</p>
+          <p>Composable rubrics admit a degenerate policy: satisfy four of the five by never acting on the fifth. An agent that just reads and probes until the step cap leaks nothing, spends nothing, and emits clean JSON — banking ~0.51 reward for doing nothing useful. The 3B fell into this basin and stayed; so did the 7B. Three on-policy interventions failed to break it. I caught it on the training curves and shipped it as a documented hazard report for anyone else training in composable-rubric RL.</p>
+        </aside>
+      </div>
+      <section class="page" id="cp-result" aria-labelledby="cp-result-h">
+        <p class="step-k mono">Finished result</p>
+        <h2 id="cp-result-h">A 1.5B model beat the 3B and the 7B — by being more malleable.</h2>
+        <p>The breakthrough came from going <em>smaller</em>, not bigger. A bigger model’s stronger pretraining prior resists the gradient; a 1.5B is plastic enough to be pulled out of the no-commit basin before the trap reasserts. Trained with REINFORCE plus light reward shaping and evaluated at an early checkpoint, Qwen2.5-1.5B reaches 34% task-success on the held-out 30%-adversarial pool — versus 0% for both frozen and trained 3B, and 18% for the same-size frozen baseline. It commits decisively in 3.7 steps instead of burning all 12, with 83% fewer parse errors. Fifty episodes of the small model beat 250 of the large one.</p>
+        <dl class="outcomes">
+          <div><dd>34%</dd><dt class="mono">held-out success</dt></div>
+          <div><dd>1.5B</dd><dt class="mono">trained model</dt></div>
+          <div><dd>5</dd><dt class="mono">reward rubrics</dt></div>
+          <div><dd>4</dd><dt class="mono">adversarial axes</dt></div>
+        </dl>
+      </section>
+      <section class="page" id="cp-ship" aria-labelledby="cp-ship-h">
+        <p class="step-k mono">Shipped</p>
+        <h2 id="cp-ship-h">Open and validator-green</h2>
+        <p>Shipped open and validator-green: a FastAPI server in a Docker container on Hugging Face Spaces, 96 passing unit tests, public run logs and LoRA checkpoints on the <a href="https://huggingface.co/datasets/vex-0/mcparena-runs"><code>vex-0/mcparena-runs</code></a> dataset, and a <a href="https://vex-0-mcparena.hf.space/demo/">live demo</a> that streams an episode.</p>
+        <p class="case-links"><a class="card-link" href="https://huggingface.co/spaces/vex-0/mcparena">Hugging Face Space <span aria-hidden="true">↗</span></a></p>
+      </section>
+      <a class="next-booklet" href="#case-careline"><span class="mono">Next booklet · F/02</span><span class="nb-name">CareLine <span aria-hidden="true">→</span></span></a>
+      <p class="page-back"><a href="#" class="mono">← Back to the bench</a> · <a href="#work" class="mono">All drawers</a></p>
+    </div>
+  </div>
+</article>
+
+<!-- ============================================================ ABOUT -->
+<section class="view view-about" data-view="about" hidden aria-labelledby="about-h">
+  <div class="about">
+    <figure class="portrait">
+      <div class="portrait-frame">
+        <span class="crop c1"></span><span class="crop c2"></span><span class="crop c3"></span><span class="crop c4"></span>
+        <span class="portrait-mono" aria-hidden="true">B<span>.</span>M</span>
+      </div>
+      <figcaption class="gap mono">[ink portrait pending · needs a real photo of Bhargav]</figcaption>
+    </figure>
+    <div class="about-text">
+      <p class="kicker mono">About · at the bench</p>
+      <h1 id="about-h" class="display" tabindex="-1">At the bench</h1>
+      <p class="about-lede">I build products where AI meets real machines — and I care about how they look, feel and reach people as much as how they work. For two years I’ve been one of two engineers behind Epicure Robotics’ robots that make and sell drinks on their own, open all day with nobody behind the counter. Now I’m at Zen Technologies, bringing private AI into defense software. On the side, I build small AI models that do one job well, cheaply, on hardware you already own.</p>
+
+      <h2 class="sec-k mono">On the bench right now</h2>
+      <ol class="now">
+        <li><p class="now-name">Zen Technologies</p><p class="now-meta mono">2026 – · AI/ML · R&amp;D</p><p>Bringing private AI into defense training software — AI that runs on our own hardware, because nothing is allowed to go to the cloud.</p></li>
+        <li><p class="now-name">Epicure Robotics</p><p class="now-meta mono">2024 – · one of two engineers</p><p>The software behind robots that make and sell drinks on their own — from the screen a customer taps to the cloud that runs the fleet.</p></li>
+        <li><p class="now-name">BITS Pilani × Scaler</p><p class="now-meta mono">2023 – 2027 · B.Sc. (Hons.) CS</p><p>Final year. Most of what I know came from shipping alongside it.</p></li>
+      </ol>
+
+      <h2 class="sec-k mono">Where I’m headed</h2>
+      <div class="about-body">
+        <p>The best AI today lives in the cloud. A lot of the world can’t use it — a defense base, a factory floor, a hospital, a robot in a mall with bad Wi-Fi. They need AI small enough to run on their own machines, and simple enough to trust.</p>
+        <p>I’ve spent two years putting machines in front of real customers, and the last year on AI. I want to build the company that brings the two together.</p>
+        <p>I’m not only the engineer in the room. I take ownership of how a product looks and feels — the screen a customer taps at an Epicure machine, the flows in my own products, this site. And I’m learning the other half: putting things in front of people and getting them to pay. Freelance work taught me to win clients for my own time.</p>
+      </div>
+      <p class="toolkit"><span class="mono">Toolkit</span> Hardware, payments, AI, design, selling — I pick up whatever the problem needs.</p>
+      <p class="about-links mono"><a href="/resume.pdf">Résumé (PDF)</a> · <a href="https://github.com/vexora-0">GitHub</a> · <a href="#contact">Contact</a></p>
+      <p class="page-back"><a href="#" class="mono">← Back to the bench</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ CONTACT -->
+<section class="view view-contact" data-view="contact" hidden aria-labelledby="contact-h">
+  <div class="contact">
+    <div class="contact-text">
+      <p class="kicker mono">Contact</p>
+      <h1 id="contact-h" class="display" tabindex="-1">Write on the tag.</h1>
+      <p class="page-lede">The quickest way to reach me is email. Copy the address, or write a note below and copy it into your mail app.</p>
+      <p class="contact-meta mono"><span class="dot" aria-hidden="true"></span>open · IST · Bangalore <span class="js-ist">--:--</span></p>
+    </div>
+    <div class="tag-wrap">
+      <div class="luggage-tag">
+        <span class="tag-hole" aria-hidden="true"></span>
+        <svg class="tag-string" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 0 C 40 30, 90 50, 60 92"/></svg>
+        <p class="tag-k mono">If found, return to</p>
+        <p class="tag-name">Bhargav Munigonda</p>
+        <p class="tag-addr mono">Bangalore, India</p>
+        <p class="tag-mail mono">vexora.m04@gmail.com</p>
+        <button type="button" class="btn btn-ink js-copy tag-copy" data-copy="vexora.m04@gmail.com" data-stamp="1">Copy email</button>
+        <span class="stamp mono" aria-hidden="true">Copied</span>
+        <p class="tag-links mono"><a href="/resume.pdf">Résumé (PDF)</a> · <a href="https://github.com/vexora-0">github.com/vexora-0</a></p>
+      </div>
+    </div>
+    <form class="note-form" novalidate aria-labelledby="form-h">
+      <h2 id="form-h" class="sec-k mono">Write a note</h2>
+      <label><span class="mono">Your name</span><input name="name" autocomplete="name" required></label>
+      <label><span class="mono">Your email</span><input name="email" type="email" autocomplete="email" required></label>
+      <label><span class="mono">Message</span><textarea name="message" rows="5" required></textarea></label>
+      <button type="submit" class="btn btn-ink">Compose note</button>
+      <p class="form-hint mono">Nothing is sent from this page. You’ll get the note back to copy.</p>
+    </form>
+    <div class="composed" hidden tabindex="-1" aria-live="polite">
+      <p class="sec-k mono">Your note is ready</p>
+      <p>Copy it and paste it into an email to <b>vexora.m04@gmail.com</b>.</p>
+      <pre class="composed-text"></pre>
+      <div class="cta">
+        <button type="button" class="btn btn-ink js-copy-note">Copy note</button>
+        <button type="button" class="btn btn-line js-copy" data-copy="vexora.m04@gmail.com">Copy address</button>
+        <button type="button" class="btn btn-quiet js-edit-note">Edit</button>
+      </div>
+    </div>
+  </div>
+  <p class="page-back"><a href="#" class="mono">← Back to the bench</a></p>
+</section>
+
+<!-- ============================================================ 404 -->
+<section class="view view-404" data-view="404" hidden aria-labelledby="nf-h">
+  <div class="nf">
+    <div class="nf-plate plate-svg" data-plate="drawers" data-p="0" data-hi="d12" data-accent="#2F5BEA"></div>
+    <div>
+      <p class="kicker mono">Fig. 404 · Part not found</p>
+      <h1 id="nf-h" class="display" tabindex="-1">The page you wanted ran off without watching.</h1>
+      <p class="page-lede">That drawer is empty. Everything else is still on the bench.</p>
+      <p class="cta"><a class="btn btn-ink" href="#">Back to the bench</a> <a class="btn btn-line" href="#work">Open the drawers</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="toast mono" role="status" aria-live="polite"></div>
+<noscript><style>.view[hidden]{display:block!important}.stage-wrap,.td-stage-wrap{display:none}</style></noscript>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

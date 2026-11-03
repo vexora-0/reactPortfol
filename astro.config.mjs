@@ -9,7 +9,7 @@ import tailwind from '@astrojs/tailwind';
 // importing @tailwind base manually so our CSS custom properties land first
 // and Tailwind's preflight doesn't fight our tokens.
 export default defineConfig({
-  site: 'https://bhargav.dev', // placeholder — domain per spec §10 #2
+  site: 'https://vexora-m04.vercel.app',
   integrations: [
     mdx(),
     tailwind({ applyBaseStyles: false }),
